@@ -4,6 +4,8 @@
 
 USING_NS_CC;
 
+#define MOTION_STREAK_TAG 10
+
 CCScene* GameScene::scene()
 {
     // 'scene' is an autorelease object
@@ -34,10 +36,37 @@ bool GameScene::init()
     CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
     CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
     
-    generatePiece();
+    this->setTouchEnabled(true);
+    this->setTouchMode(kCCTouchesOneByOne);
+    
+    this->gameLogic();
     
     return true;
 }
+
+bool GameScene::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
+{
+    this->removeChildByTag(MOTION_STREAK_TAG, true);
+    
+    CCPoint point = this->convertTouchToNodeSpace(pTouch);
+    CCMotionStreak* pStreak = CCMotionStreak::create(0.5f, 1.0f, 10.0f, ccc3(255, 255, 0), "line.png");
+    pStreak->setPosition(point);
+    pStreak->setTag(2);
+    this->addChild(pStreak, 5, MOTION_STREAK_TAG);
+    return true;
+}
+
+void GameScene::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
+{
+    CCPoint point = this->convertTouchToNodeSpace(pTouch);
+    CCMotionStreak* pStreak = (CCMotionStreak*)this->getChildByTag(MOTION_STREAK_TAG);
+    pStreak->setPosition(point);
+    
+    // タップポイント取得
+    CCDirector* pDirector = CCDirector::sharedDirector();
+    CCPoint touchPoint = pDirector->convertToGL(pTouch->getLocationInView());
+}
+
 
 void GameScene::gameLogic()
 {
@@ -52,13 +81,15 @@ void GameScene::generatePiece()
     {
         for (int y = 0; y < 4; y++)
         {
-            CCDrawNode *piece = CCDrawNode::create();
+            //CCDrawNode *piece = CCDrawNode::create();
+            CCSprite *piece = CCSprite::create("blue.png", CCRectMake(0, 0, 50, 50));
+            
             int diameter = Piece::getDaimeter();
             piece->setContentSize(CCSize(diameter, diameter));
             piece->setPosition(ccp(
                                   winSize.width * 0.5 + (x - 1.5) * diameter,
                                   winSize.height * 0.5 + (y - 1.5) * diameter));
-            GameScene::drawPiece(piece, diameter);
+//            GameScene::drawPiece(piece, diameter);
             piece->setTag(TAG_PIECE);
             this->addChild(piece);
         }

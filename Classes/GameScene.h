@@ -22,6 +22,10 @@ public:
     // implement the "static node()" method manually
     CREATE_FUNC(GameScene);
     
+    bool ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
+    
+    void ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
+    
     void gameLogic();
     
     //ピースの初期配置

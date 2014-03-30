@@ -20,4 +20,4 @@ public:
     CREATE_FUNC(TitleScene);
 };
 
-#endif /* defined(__ant__TitleScene__) */
+#endif /* defined(__Poyo__TitleScene__) */

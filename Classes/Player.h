@@ -19,4 +19,4 @@ public:
     void particle();
 };
 
-#endif  /* defined(__ant__Player__) */
+#endif  /* defined(__Poyo__Player__) */

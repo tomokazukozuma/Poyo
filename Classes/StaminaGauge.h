@@ -15,4 +15,4 @@ public:
     void update(int stamina);
 };
 
-#endif  /* defined(__ant__StaminaGauge__) */
+#endif  /* defined(__Poyo__StaminaGauge__) */

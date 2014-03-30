@@ -32,8 +32,8 @@ public:
     //タッチの移動中
     void ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
     
-    //ピースの初期配置
-    void makePazzle();
+    //タッチイベント終了時の処理
+    void ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
 };
 
-#endif /* defined(__ant__GameScene__) */
+#endif /* defined(__Poyo__GameScene__) */

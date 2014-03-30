@@ -2,15 +2,14 @@
 #define __Config__
 
 enum {
-    TAG_PLAYER,
-    TAG_ENEMY,
     TAG_STAMINA_GAUGE,
     TAG_PIECE,
     TAG_SCORE,
-    RED,
+    RED = 1,
     BLUE,
     GREEN,
-    YELLOW
+    YELLOW,
+    LINE
 };
 
-#endif  /* defined(__ant__Config__) */
+#endif  /* defined(__Poyo__Config__) */

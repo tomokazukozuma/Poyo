@@ -21,4 +21,4 @@ public:
     static string name;
 };
 
-#endif  /* defined(__ant__ResultScene__) */
+#endif  /* defined(__Poyo__ResultScene__) */

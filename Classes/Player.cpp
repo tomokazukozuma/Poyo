@@ -15,9 +15,6 @@ bool Player::init()
     // set size
     this->setContentSize(CCSize(100, 135));
     
-    // set tag
-    this->setTag(TAG_PLAYER);
-    
     // set default stamina
     this->stamina = 5;
     

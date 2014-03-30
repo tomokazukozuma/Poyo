@@ -16,10 +16,20 @@ public:
     //ピースの幅を取得
     static int getPieceSize();
     
+    //開始時のパズルを作成
     static void makePazzle(GameScene *gameScene);
     
     //imageを設定
     static CCSprite* getPieceWithImage();
+    
+    //ピースを格納する配列
+    static int pieceArray[4][4];
+    
+    //要素の代入
+    static void setElementToPieceArray(int x, int y, int tag);
+    
+    //要素の取得
+    static int getElementOfPieceArray(int x, int y);
 };
 
-#endif /* defined(__Colors__Piece__) */
+#endif /* defined(__Poyo__Piece__) */

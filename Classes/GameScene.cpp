@@ -6,8 +6,8 @@ USING_NS_CC;
 
 #define MOTION_STREAK_TAG 10
 
-static const int numberOfRows = 4;
-static const int numberOfColumns = 5;
+//static const int numberOfRows = 4;
+//static const int numberOfColumns = 5;
 
 CCScene* GameScene::scene()
 {
@@ -42,30 +42,9 @@ bool GameScene::init()
     this->setTouchEnabled(true);
     this->setTouchMode(kCCTouchesOneByOne);
     
-    this->makePazzle();
+    Piece::makePazzle(this);
     
     return true;
-}
-
-void GameScene::makePazzle()
-{
-    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-    
-    for (int x = 0; x < 4; x++)
-    {
-        for (int y = 0; y < 4; y++)
-        {
-            CCSprite *piece = CCSprite::create("red.png", CCRectMake(0, 0, 50, 50)); //Piece::getPieceWithImage();
-            
-            int pieceSize = Piece::getPieceSize();
-            piece->setContentSize(CCSize(pieceSize, pieceSize));
-            piece->setPosition(ccp(
-                                   winSize.width * 0.5 + (x - 1.5) * pieceSize,
-                                   winSize.height * 0.5 + (y - 1.5) * pieceSize));
-            piece->setTag(TAG_PIECE);
-            this->addChild(piece);
-        }
-    }
 }
 
 bool GameScene::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
@@ -75,7 +54,7 @@ bool GameScene::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     CCPoint point = this->convertTouchToNodeSpace(pTouch);
     CCMotionStreak* pStreak = CCMotionStreak::create(0.5f, 1.0f, 10.0f, ccc3(255, 255, 0), "line.png");
     pStreak->setPosition(point);
-    pStreak->setTag(2);
+    pStreak->setTag(LINE);
     this->addChild(pStreak, 5, MOTION_STREAK_TAG);
     return true;
 }
@@ -87,8 +66,32 @@ void GameScene::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     pStreak->setPosition(point);
     
     // タップポイント取得
-//    CCDirector* pDirector = CCDirector::sharedDirector();
-//    CCPoint touchPoint = pDirector->convertToGL(pTouch->getLocationInView());
+    CCDirector* pDirector = CCDirector::sharedDirector();
+    CCPoint touchPoint = pDirector->convertToGL(pTouch->getLocationInView());
+    
+    Piece *piece = (Piece*)this->getChildByTag(RED);
+    
+    if (!piece)
+    {
+        return;
+    }
+
+    CCObject *obj = NULL;
+    CCARRAY_FOREACH_REVERSE(this->getChildren(), obj) {
+        
+        CCNode *node = (CCNode *)obj;
+        CCRect nodeRect = node->boundingBox();
+        
+        if (nodeRect.containsPoint(touchPoint))
+        {
+            node->removeFromParentAndCleanup(true);
+        }
+    }
+}
+
+void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
+{
+
 }
 
 void GameScene::menuCloseCallback(CCObject* pSender)

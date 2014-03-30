@@ -4,6 +4,7 @@
 USING_NS_CC;
 
 static const int pieceSize = 100;
+int Piece::pieceArray[4][4];
 
 bool Piece::init()
 {
@@ -16,7 +17,7 @@ int Piece::getPieceSize()
     return Piece::pieceSize;
 }
 
-static void makePazzle(GameScene *gameScene)
+void Piece::makePazzle(GameScene *gameScene)
 {
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
     
@@ -38,7 +39,7 @@ static void makePazzle(GameScene *gameScene)
 }
 
 //CCSpriteオブジェクトを生成して返す
-static CCSprite* getPieceWithImage()
+CCSprite* Piece::getPieceWithImage()
 {
     CCSprite *piece;
     
@@ -64,4 +65,14 @@ static CCSprite* getPieceWithImage()
             break;
     }
     return piece;
+}
+
+void Piece::setElementToPieceArray(int x, int y, int tag)
+{
+    Piece::pieceArray[x][y] = tag;
+}
+
+int Piece::getElementOfPieceArray(int x, int y)
+{
+    return Piece::pieceArray[x][y];
 }

@@ -36,13 +36,6 @@ bool TitleScene::init()
     //メニューの追加
     this->addMenu();
     
-    //音量調整
-    SimpleAudioEngine::sharedEngine()->setBackgroundMusicVolume(0.5f);
-    //読み込み
-    SimpleAudioEngine::sharedEngine()->preloadBackgroundMusic("start_bgm.mp3");
-    //再生
-    SimpleAudioEngine::sharedEngine()->playBackgroundMusic("start_bgm.mp3");    
-    
     return true;
 }
 

@@ -9,6 +9,10 @@ USING_NS_CC;
 
 class GameScene : public CCLayerColor
 {
+private:
+    static const int numberOfRows;
+    static const int numberOfColumns;
+    
 public:
     // Here's a difference. Method 'init' in cocos2d-x returns bool, instead of returning 'id' in cocos2d-iphone
     virtual bool init();
@@ -22,17 +26,14 @@ public:
     // implement the "static node()" method manually
     CREATE_FUNC(GameScene);
     
+    //タッチ開始
     bool ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
     
+    //タッチの移動中
     void ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
     
-    void gameLogic();
-    
     //ピースの初期配置
-    void generatePiece();
-    
-    //ピースを色付きで設置する
-    void drawPiece(CCDrawNode *piece, int diameter);
+    void makePazzle();
 };
 
 #endif /* defined(__ant__GameScene__) */

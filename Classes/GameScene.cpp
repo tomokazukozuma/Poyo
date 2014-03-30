@@ -6,6 +6,9 @@ USING_NS_CC;
 
 #define MOTION_STREAK_TAG 10
 
+static const int numberOfRows = 4;
+static const int numberOfColumns = 5;
+
 CCScene* GameScene::scene()
 {
     // 'scene' is an autorelease object
@@ -33,15 +36,36 @@ bool GameScene::init()
     
     CCLayerColor::initWithColor(ccc4(255, 255, 255, 255));
     
-    CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
-    CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
+//    CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
+//    CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
     
     this->setTouchEnabled(true);
     this->setTouchMode(kCCTouchesOneByOne);
     
-    this->gameLogic();
+    this->makePazzle();
     
     return true;
+}
+
+void GameScene::makePazzle()
+{
+    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+    
+    for (int x = 0; x < 4; x++)
+    {
+        for (int y = 0; y < 4; y++)
+        {
+            CCSprite *piece = CCSprite::create("red.png", CCRectMake(0, 0, 50, 50)); //Piece::getPieceWithImage();
+            
+            int pieceSize = Piece::getPieceSize();
+            piece->setContentSize(CCSize(pieceSize, pieceSize));
+            piece->setPosition(ccp(
+                                   winSize.width * 0.5 + (x - 1.5) * pieceSize,
+                                   winSize.height * 0.5 + (y - 1.5) * pieceSize));
+            piece->setTag(TAG_PIECE);
+            this->addChild(piece);
+        }
+    }
 }
 
 bool GameScene::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
@@ -63,58 +87,8 @@ void GameScene::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     pStreak->setPosition(point);
     
     // タップポイント取得
-    CCDirector* pDirector = CCDirector::sharedDirector();
-    CCPoint touchPoint = pDirector->convertToGL(pTouch->getLocationInView());
-}
-
-
-void GameScene::gameLogic()
-{
-    this->generatePiece();
-}
-
-void GameScene::generatePiece()
-{
-    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-    
-    for (int x = 0; x < 4; x++)
-    {
-        for (int y = 0; y < 4; y++)
-        {
-            //CCDrawNode *piece = CCDrawNode::create();
-            CCSprite *piece = CCSprite::create("blue.png", CCRectMake(0, 0, 50, 50));
-            
-            int diameter = Piece::getDaimeter();
-            piece->setContentSize(CCSize(diameter, diameter));
-            piece->setPosition(ccp(
-                                  winSize.width * 0.5 + (x - 1.5) * diameter,
-                                  winSize.height * 0.5 + (y - 1.5) * diameter));
-//            GameScene::drawPiece(piece, diameter);
-            piece->setTag(TAG_PIECE);
-            this->addChild(piece);
-        }
-    }
-}
-
-void GameScene::drawPiece(CCDrawNode *piece, int diameter)
-{
-    int color = rand()%4;
-    switch (color) {
-        case 0:
-            piece->drawDot(ccp(diameter/2, diameter/2), diameter/2, ccc4f(0, 0, 0, 50));
-            break;
-        case 1:
-            piece->drawDot(ccp(diameter/2, diameter/2), diameter/2, ccc4f(0, 255, 100, 50));
-            break;
-        case 2:
-            piece->drawDot(ccp(diameter/2, diameter/2), diameter/2, ccc4f(100, 255, 0, 50));
-            break;
-        case 3:
-            piece->drawDot(ccp(diameter/2, diameter/2), diameter/2, ccc4f(0, 100, 255, 50));
-            break;
-        default:
-            break;
-    }
+//    CCDirector* pDirector = CCDirector::sharedDirector();
+//    CCPoint touchPoint = pDirector->convertToGL(pTouch->getLocationInView());
 }
 
 void GameScene::menuCloseCallback(CCObject* pSender)

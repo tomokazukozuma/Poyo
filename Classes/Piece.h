@@ -2,37 +2,24 @@
 #define __Colors__Piece__
 
 #include "cocos2d.h"
+#include "GameScene.h"
 
-class Piece: public cocos2d::CCDrawNode
+class Piece: public cocos2d::CCSprite
 {
 private:
-    static const int diameter = 100;
+    static const int pieceSize = 100;
     
 public:
     virtual bool init();
     CREATE_FUNC(Piece);
     
-    int color;
+    //ピースの幅を取得
+    static int getPieceSize();
     
-    int x;
+    static void makePazzle(GameScene *gameScene);
     
-    int y;
-    
-    //直径を取得
-    static int getDaimeter();
-    
-    //色を取得
-    int getColor();
-    
-    //位置xを取得
-    int getPiecePositionX();
-    
-    
-    //位置yを取得
-    int getPiecePositionY();
-    
-    //色付きでpieceを設置
-    static void drawPiece(CCDrawNode *piece);
+    //imageを設定
+    static CCSprite* getPieceWithImage();
 };
 
 #endif /* defined(__Colors__Piece__) */

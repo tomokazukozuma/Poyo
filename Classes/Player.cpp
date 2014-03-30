@@ -66,7 +66,5 @@ void Player::particle()
     
     SimpleAudioEngine::sharedEngine()->setEffectsVolume(0.5f);
     SimpleAudioEngine::sharedEngine()->preloadEffect("effect1.wav");
-    int soundId = SimpleAudioEngine::sharedEngine()->playEffect("effect1.wav");
-    
-    
+    SimpleAudioEngine::sharedEngine()->playEffect("effect1.wav");
 }

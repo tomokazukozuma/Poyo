@@ -3,58 +3,65 @@
 #include "cocos2d.h"
 USING_NS_CC;
 
-static const int diameter = 100;
+static const int pieceSize = 100;
 
 bool Piece::init()
 {
-    // set tag
-    this->setTag(TAG_PIECE);
-    
     return true;
 }
 
-//ピースの直径を取得
-int Piece::getDaimeter()
+//ピースのサイズを取得
+int Piece::getPieceSize()
 {
-    return Piece::diameter;
+    return Piece::pieceSize;
 }
 
-//ピースの色を取得
-int getColor(Piece *piece)
+static void makePazzle(GameScene *gameScene)
 {
-    return piece->color;
+    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+    
+    for (int x = 0; x < 4; x++)
+    {
+        for (int y = 0; y < 4; y++)
+        {
+            CCSprite *piece = Piece::getPieceWithImage();
+            
+            int pieceSize = Piece::getPieceSize();
+            piece->setContentSize(CCSize(pieceSize, pieceSize));
+            piece->setPosition(ccp(
+                                   winSize.width * 0.5 + (x - 1.5) * pieceSize,
+                                   winSize.height * 0.5 + (y - 1.5) * pieceSize));
+            piece->setTag(TAG_PIECE);
+            gameScene->addChild(piece);
+        }
+    }
 }
 
-//位置xを取得
-int getPiecePositionX(Piece *piece)
+//CCSpriteオブジェクトを生成して返す
+static CCSprite* getPieceWithImage()
 {
-    return piece->x;
-}
-
-//位置yを取得
-int getPiecePositionY(Piece *piece)
-{
-    return piece->y;
-}
-
-//色付きでpieceを設置
-static void drawPiece(CCDrawNode *piece)
-{
+    CCSprite *piece;
+    
     int color = rand()%4;
     switch (color) {
         case 0:
-            piece->drawDot(ccp(diameter/2, diameter/2), diameter/2, ccc4f(0, 0, 0, 50));
+            piece = CCSprite::create("red.png", CCRectMake(0, 0, 50, 50));
+            piece->setTag(RED);
             break;
         case 1:
-            piece->drawDot(ccp(diameter/2, diameter/2), diameter/2, ccc4f(0, 255, 100, 50));
+            piece = CCSprite::create("blue.png", CCRectMake(0, 0, 50, 50));
+            piece->setTag(BLUE);
             break;
         case 2:
-            piece->drawDot(ccp(diameter/2, diameter/2), diameter/2, ccc4f(100, 255, 0, 50));
+            piece = CCSprite::create("green.png", CCRectMake(0, 0, 50, 50));
+            piece->setTag(GREEN);
             break;
         case 3:
-            piece->drawDot(ccp(diameter/2, diameter/2), diameter/2, ccc4f(0, 100, 255, 50));
+            piece = CCSprite::create("yellow.png", CCRectMake(0, 0, 50, 50));
+            piece->setTag(YELLOW);
             break;
         default:
             break;
     }
+    return piece;
 }

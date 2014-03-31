@@ -1,8 +1,11 @@
 #include "GameScene.h"
 #include "Config.h"
 #include "Piece.h"
+#include "vector.h"
 
 USING_NS_CC;
+
+using namespace std;
 
 #define MOTION_STREAK_TAG 10
 
@@ -36,17 +39,16 @@ bool GameScene::init()
     
     CCLayerColor::initWithColor(ccc4(255, 255, 255, 255));
     
-//    CCSize visibleSize = CCDirector::sharedDirector()->getVisibleSize();
-//    CCPoint origin = CCDirector::sharedDirector()->getVisibleOrigin();
-    
     this->setTouchEnabled(true);
     this->setTouchMode(kCCTouchesOneByOne);
     
+    //
     Piece::makePazzle(this);
     
     return true;
 }
 
+//タッチイベント開始
 bool GameScene::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
     this->removeChildByTag(MOTION_STREAK_TAG, true);
@@ -59,6 +61,7 @@ bool GameScene::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     return true;
 }
 
+//
 void GameScene::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
     CCPoint point = this->convertTouchToNodeSpace(pTouch);
@@ -68,30 +71,32 @@ void GameScene::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     // タップポイント取得
     CCDirector* pDirector = CCDirector::sharedDirector();
     CCPoint touchPoint = pDirector->convertToGL(pTouch->getLocationInView());
-    
-    Piece *piece = (Piece*)this->getChildByTag(RED);
-    
-    if (!piece)
-    {
-        return;
-    }
 
     CCObject *obj = NULL;
     CCARRAY_FOREACH_REVERSE(this->getChildren(), obj) {
         
-        CCNode *node = (CCNode *)obj;
-        CCRect nodeRect = node->boundingBox();
+        Piece *piece = (Piece *)obj;
+        CCRect pieceRect = piece->boundingBox();
         
-        if (nodeRect.containsPoint(touchPoint))
+        if (pieceRect.containsPoint(touchPoint))
         {
-            node->removeFromParentAndCleanup(true);
+            Piece::setElementToPieceArray(piece->getX(), piece->getY(), 0);
+            Piece::setPieceInstanceArray(piece);
+            piece->removeFromParentAndCleanup(true);
         }
     }
 }
 
 void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
-
+    CCLOG("enddddddddddddddddddd");
+    
+    for(int i; i < 5; i++)
+    {
+//        this->removeChild(Piece::pieceInstanceArray->pop_back(), true);
+        
+//        vector<Piece*>::iterator it = Piece::pieceInstanceArray.begin();
+    }
 }
 
 void GameScene::menuCloseCallback(CCObject* pSender)

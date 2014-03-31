@@ -6,9 +6,9 @@ enum {
     TAG_PIECE,
     TAG_SCORE,
     RED = 1,
-    BLUE,
-    GREEN,
-    YELLOW,
+    BLUE = 2,
+    GREEN = 3,
+    YELLOW = 4,
     LINE
 };
 

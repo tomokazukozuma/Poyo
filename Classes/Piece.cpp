@@ -37,10 +37,23 @@ void Piece::makePazzle(GameScene *gameScene)
                                    winSize.width * 0.5 + (x - 1.5) * Piece::pieceSize,
                                    winSize.height * 0.5 + (y - 1.5) * Piece::pieceSize));
 //            piece->setTag(Piece);
+			Piece::setElementToPieceTypeArray(x, y, piece->getTag());
             gameScene->addChild(piece);
         }
     }
+	Piece::showPuzzle();
 }
+
+void Piece::showPuzzle()
+{
+	for (int x = 0; x < 4; x++) {
+		for (int y = 0; y < 4; y++) {
+			printf("%2d",getElementOfPieceTypeArray(x, y));
+		}
+		printf("\n");
+	}
+}
+
 
 //CCSpriteオブジェクトを生成して返す
 Piece* Piece::generatePieceWithImage()

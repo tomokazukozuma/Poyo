@@ -65,6 +65,9 @@ public:
     
     //ピースの幅を取得
     static int getPieceSize();
+	
+	// Puzzleの表示
+	static void showPuzzle();
 };
 
 #endif /* defined(__Poyo__Piece__) */

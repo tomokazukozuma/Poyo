@@ -17,16 +17,45 @@ public:
     virtual bool init();
     CREATE_FUNC(Piece);
     
+    //ピースの位置x
     int x;
     
+    //ピースの位置y
     int y;
     
     //ピースのタイプ
     int type;
     
+    //ピースのタイプを格納する配列
+    static int pieceTypeArray[4][4];
+    
+    //削除するピースのインスタンスを格納
+    static vector<Piece*> pieceInstanceArray;
+    
+    //開始時のパズルを作成
+    static void makePazzle(GameScene *gameScene);
+    
+    //imageを設定
+    static Piece* generatePieceWithImage();
+    
+    /* setter */
+    
+    //インスタンスに位置をセット
     void setPos(int x, int y);
     
+    //インスタンスにタイプをセット
     void setType(int type);
+    
+    //要素の代入
+    static void setElementToPieceTypeArray(int x, int y, int tag);
+    
+    //Pieceのインスタンスを格納
+    static void setPieceInstanceArray(Piece *piece);
+    
+    /* getter */
+    
+    //要素の取得
+    static int getElementOfPieceTypeArray(int x, int y);
     
     int getX();
     
@@ -36,27 +65,6 @@ public:
     
     //ピースの幅を取得
     static int getPieceSize();
-    
-    //開始時のパズルを作成
-    static void makePazzle(GameScene *gameScene);
-    
-    //imageを設定
-    static Piece* generatePieceWithImage();
-    
-    //ピースのタイプを格納する配列
-    static int pieceTypeArray[4][4];
-    
-    //削除するピースのインスタンスを格納
-    static vector<Piece*> pieceInstanceArray[];
-    
-    //要素の代入
-    static void setElementToPieceArray(int x, int y, int tag);
-    
-    //要素の取得
-    static int getElementOfPieceArray(int x, int y);
-    
-    static void setPieceInstanceArray(Piece *piece);
-
 };
 
 #endif /* defined(__Poyo__Piece__) */

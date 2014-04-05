@@ -56,7 +56,7 @@ bool GameScene::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     CCPoint point = this->convertTouchToNodeSpace(pTouch);
     CCMotionStreak* pStreak = CCMotionStreak::create(0.5f, 1.0f, 10.0f, ccc3(255, 255, 0), "line.png");
     pStreak->setPosition(point);
-    pStreak->setTag(LINE);
+    pStreak->setTag(Line);
     this->addChild(pStreak, 5, MOTION_STREAK_TAG);
     return true;
 }
@@ -80,9 +80,9 @@ void GameScene::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
         
         if (pieceRect.containsPoint(touchPoint))
         {
-            Piece::setElementToPieceArray(piece->getX(), piece->getY(), 0);
+            Piece::setElementToPieceTypeArray(piece->getX(), piece->getY(), 0);
             Piece::setPieceInstanceArray(piece);
-            piece->removeFromParentAndCleanup(true);
+//            piece->removeFromParentAndCleanup(true);
         }
     }
 }
@@ -90,12 +90,11 @@ void GameScene::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
     CCLOG("enddddddddddddddddddd");
-    
-    for(int i; i < 5; i++)
+
+    vector<Piece*>::iterator it = Piece::pieceInstanceArray.begin();
+    while( it != Piece::pieceInstanceArray.end() )  // 末尾要素まで
     {
-//        this->removeChild(Piece::pieceInstanceArray->pop_back(), true);
         
-//        vector<Piece*>::iterator it = Piece::pieceInstanceArray.begin();
     }
 }
 

@@ -7,7 +7,7 @@ using namespace std;
 
 int Piece::pieceSize = 100;
 int Piece::pieceTypeArray[4][4];
-vector<Piece*> Piece::pieceInstanceArray[5];
+vector<Piece*> Piece::pieceInstanceArray;
 
 bool Piece::init()
 {
@@ -36,7 +36,7 @@ void Piece::makePazzle(GameScene *gameScene)
             piece->setPosition(ccp(
                                    winSize.width * 0.5 + (x - 1.5) * Piece::pieceSize,
                                    winSize.height * 0.5 + (y - 1.5) * Piece::pieceSize));
-            piece->setTag(TAG_PIECE);
+//            piece->setTag(Piece);
             gameScene->addChild(piece);
         }
     }
@@ -51,23 +51,23 @@ Piece* Piece::generatePieceWithImage()
     switch (color) {
         case 0:
             piece = (Piece*)CCSprite::create("red.png", CCRectMake(0, 0, 50, 50));
-            piece->setType(RED);
-            piece->setTag(RED);
+            piece->setType(Red);
+            piece->setTag(Red);
             break;
         case 1:
             piece = (Piece*)CCSprite::create("blue.png", CCRectMake(0, 0, 50, 50));
-            piece->setType(BLUE);
-            piece->setTag(BLUE);
+            piece->setType(Blue);
+            piece->setTag(Blue);
             break;
         case 2:
             piece = (Piece*)CCSprite::create("green.png", CCRectMake(0, 0, 50, 50));
-            piece->setType(GREEN);
-            piece->setTag(GREEN);
+            piece->setType(Green);
+            piece->setTag(Green);
             break;
         case 3:
             piece = (Piece*)CCSprite::create("yellow.png", CCRectMake(0, 0, 50, 50));
-            piece->setType(YELLOW);
-            piece->setTag(YELLOW);
+            piece->setType(Yellow);
+            piece->setTag(Yellow);
             break;
         default:
             break;
@@ -75,12 +75,12 @@ Piece* Piece::generatePieceWithImage()
     return piece;
 }
 
-void Piece::setElementToPieceArray(int x, int y, int tag)
+void Piece::setElementToPieceTypeArray(int x, int y, int tag)
 {
     Piece::pieceTypeArray[x][y] = tag;
 }
 
-int Piece::getElementOfPieceArray(int x, int y)
+int Piece::getElementOfPieceTypeArray(int x, int y)
 {
     return Piece::pieceTypeArray[x][y];
 }
@@ -113,5 +113,5 @@ int Piece::getType()
 
 void Piece::setPieceInstanceArray(Piece *piece)
 {
-    Piece::pieceInstanceArray->push_back(piece);
+    Piece::pieceInstanceArray.push_back(piece);
 }

@@ -7,8 +7,6 @@ USING_NS_CC;
 
 using namespace std;
 
-#define MOTION_STREAK_TAG 10
-
 //static const int numberOfRows = 4;
 //static const int numberOfColumns = 5;
 
@@ -42,44 +40,31 @@ bool GameScene::init()
     this->setTouchEnabled(true);
     this->setTouchMode(kCCTouchesOneByOne);
     
-    //
     Piece::makePazzle(this);
-    
     return true;
 }
+
 
 //タッチイベント開始
 bool GameScene::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
-    this->removeChildByTag(MOTION_STREAK_TAG, true);
-    
-    CCPoint point = this->convertTouchToNodeSpace(pTouch);
-    CCMotionStreak* pStreak = CCMotionStreak::create(0.5f, 1.0f, 10.0f, ccc3(255, 255, 0), "line.png");
-    pStreak->setPosition(point);
-    pStreak->setTag(Line);
-    this->addChild(pStreak, 5, MOTION_STREAK_TAG);
     return true;
 }
 
 //
 void GameScene::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
-    CCPoint point = this->convertTouchToNodeSpace(pTouch);
-    CCMotionStreak* pStreak = (CCMotionStreak*)this->getChildByTag(MOTION_STREAK_TAG);
-    pStreak->setPosition(point);
-    
     // タップポイント取得
     CCDirector* pDirector = CCDirector::sharedDirector();
     CCPoint touchPoint = pDirector->convertToGL(pTouch->getLocationInView());
 
     CCObject *obj = NULL;
-    CCARRAY_FOREACH(this->getChildren(), obj) {
+    CCARRAY_FOREACH_REVERSE(this->getChildren(), obj) {
         Piece *piece = (Piece *)obj;
         CCRect pieceRect = piece->boundingBox();
-        CCLOG("%d", piece->getType());
         if (pieceRect.containsPoint(touchPoint))
         {
-            Piece::array->addObject(piece);
+//            Piece::array->addObject(piece);
 //            Piece::setElementToPieceTypeArray(piece->getX(), piece->getY(), 0);
 //            Piece::setPieceInstanceArray(piece);
 //            piece->removeFromParentAndCleanup(true);
@@ -93,9 +78,11 @@ void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     CCLOG("enddddddddddddddddddd");
     CCObject* obj = NULL;
     if (sizeof(Piece::array) != 0) {
+        CCLOG("%d", sizeof(Piece::array));
         CCLOG("2222222222222");
         CCARRAY_FOREACH_REVERSE(Piece::array, obj)
         {
+            CCLOG("333333333333333");
             Piece* piece = (Piece *)obj;
             this->removeChild(piece, true);
         }
@@ -110,12 +97,58 @@ void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 
 void GameScene::menuCloseCallback(CCObject* pSender)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
-#else
-    CCDirector::sharedDirector()->end();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
-#endif
-#endif
+
+//	Piece::showPuzzle();
+	check(1, 2, 2);
+
+	
+}
+
+int GameScene::check(int checkType, int x, int y)
+{
+	if (Piece::pieceTypeArray[x][y] == EMPTY) return 0;
+	int targetColorType = Piece::pieceTypeArray[x][y];
+	int cells_check[4][4];
+	for (int i = 0; i < 4; i++) {
+//		cells_check[i] = new int[4];
+		for (int j = 0; j < 4; j++) {
+			cells_check[i][j] = -1; //未チェック
+		}
+	}
+	CCLOG("------before check ---------");
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			printf("%2d",cells_check[j][i]);
+		}
+		printf("\n");
+	}
+	
+	checkRecursive(x, y, cells_check,targetColorType);
+	
+	CCLOG("------after check ---------");
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			printf("%2d",cells_check[j][i]);
+		}
+		printf("\n");
+	}
+	
+	
+	
+	return 0;
+}
+
+void GameScene::checkRecursive(int x, int y, int check_array[4][4], int colorType)
+{
+	if (0 < check_array[x][y]) return;
+	if (Piece::pieceTypeArray[x][y] != colorType) {
+		check_array[x][y] = 2;
+		return;
+	}
+	
+	check_array[x][y] = 1;
+	GameScene::checkRecursive(x + 1, y, check_array, colorType);
+	GameScene::checkRecursive(x - 1, y, check_array, colorType);
+	GameScene::checkRecursive(x, y + 1, check_array, colorType);
+	GameScene::checkRecursive(x, y - 1, check_array, colorType);
 }

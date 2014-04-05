@@ -42,11 +42,22 @@ bool GameScene::init()
     this->setTouchEnabled(true);
     this->setTouchMode(kCCTouchesOneByOne);
     
-    //
     Piece::makePazzle(this);
+	
+	// ボタン
+	CCMenuItemImage *pCloseItem =
+	CCMenuItemImage::create(
+						"red.png",
+						"blue.png",
+						this,
+						menu_selector(GameScene::menuCloseCallback));
+    CCMenu* pMenu = CCMenu::create(pCloseItem, NULL);
+    pMenu->setPosition(CCPointZero);
+    this->addChild(pMenu, 1);
     
     return true;
 }
+
 
 //タッチイベント開始
 bool GameScene::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
@@ -102,12 +113,58 @@ void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 
 void GameScene::menuCloseCallback(CCObject* pSender)
 {
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_WINRT) || (CC_TARGET_PLATFORM == CC_PLATFORM_WP8)
-	CCMessageBox("You pressed the close button. Windows Store Apps do not implement a close button.","Alert");
-#else
-    CCDirector::sharedDirector()->end();
-#if (CC_TARGET_PLATFORM == CC_PLATFORM_IOS)
-    exit(0);
-#endif
-#endif
+
+//	Piece::showPuzzle();
+	check(1, 2, 2);
+
+	
+}
+
+int GameScene::check(int checkType, int x, int y)
+{
+	if (Piece::pieceTypeArray[x][y] == EMPTY) return 0;
+	int targetColorType = Piece::pieceTypeArray[x][y];
+	int cells_check[4][4];
+	for (int i = 0; i < 4; i++) {
+//		cells_check[i] = new int[4];
+		for (int j = 0; j < 4; j++) {
+			cells_check[i][j] = -1; //未チェック
+		}
+	}
+	CCLOG("------before check ---------");
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			printf("%2d",cells_check[j][i]);
+		}
+		printf("\n");
+	}
+	
+	checkRecursive(x, y, cells_check,targetColorType);
+	
+	CCLOG("------after check ---------");
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			printf("%2d",cells_check[j][i]);
+		}
+		printf("\n");
+	}
+	
+	
+	
+	return 0;
+}
+
+void GameScene::checkRecursive(int x, int y, int check_array[4][4], int colorType)
+{
+	if (0 < check_array[x][y]) return;
+	if (Piece::pieceTypeArray[x][y] != colorType) {
+		check_array[x][y] = 2;
+		return;
+	}
+	
+	check_array[x][y] = 1;
+	GameScene::checkRecursive(x + 1, y, check_array, colorType);
+	GameScene::checkRecursive(x - 1, y, check_array, colorType);
+	GameScene::checkRecursive(x, y + 1, check_array, colorType);
+	GameScene::checkRecursive(x, y - 1, check_array, colorType);
 }

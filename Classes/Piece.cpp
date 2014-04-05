@@ -29,7 +29,7 @@ void Piece::makePazzle(GameScene *gameScene)
     {
         for (int x = 0; x < 4; x++)
         {
-            Piece *piece = (Piece*)Piece::generatePieceWithImage();
+            Piece *piece = (Piece*)Piece::generatePieceWithImage(Random);
             piece->setPos(x, y);
             piece->setContentSize(CCSize(pieceSize, pieceSize));
             piece->setPosition(ccp(
@@ -54,12 +54,12 @@ void Piece::showPuzzle()
 
 
 //CCSpriteオブジェクトを生成して返す
-Piece* Piece::generatePieceWithImage()
+Piece* Piece::generatePieceWithImage(int colorType)
 {
     Piece *piece;
     
-    int color = rand()%4;
-    switch (color) {
+	if (colorType == Random) colorType = rand()%4;
+    switch (colorType) {
         case 0:
             piece = (Piece*)CCSprite::create("red.png", CCRectMake(0, 0, 50, 50));
             piece->setType(Red);

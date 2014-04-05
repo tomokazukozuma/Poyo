@@ -36,7 +36,7 @@ public:
     static void makePazzle(GameScene *gameScene);
     
     //imageを設定
-    static Piece* generatePieceWithImage();
+    static Piece* generatePieceWithImage(int colorType);
     
     /* setter */
     

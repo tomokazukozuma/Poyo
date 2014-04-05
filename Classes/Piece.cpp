@@ -8,8 +8,8 @@ using namespace std;
 int Piece::pieceSize = 100;
 int Piece::pieceTypeArray[4][4];
 int Piece::pieceDeleteArray[4][4];
-vector<Piece*> Piece::pieceInstanceArray;
-CCArray* Piece::array = CCArray::create();
+//vector<Piece*> Piece::pieceInstanceArray;
+//CCArray* Piece::array = CCArray::create();
 
 bool Piece::init()
 {
@@ -128,7 +128,7 @@ int Piece::getType()
     return this->type;
 }
 
-void Piece::setPieceInstanceArray(Piece *piece)
-{
-    Piece::pieceInstanceArray.push_back(piece);
-}
+//void Piece::setPieceInstanceArray(Piece *piece)
+//{
+//    Piece::pieceInstanceArray.push_back(piece);
+//}

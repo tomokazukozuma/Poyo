@@ -64,6 +64,7 @@ void GameScene::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
         CCRect pieceRect = piece->boundingBox();
         if (pieceRect.containsPoint(touchPoint))
         {
+            Piece::pieceDeleteArray[piece->getX()][piece->getY()] = 1;
 //            Piece::array->addObject(piece);
 //            Piece::setElementToPieceTypeArray(piece->getX(), piece->getY(), 0);
 //            Piece::setPieceInstanceArray(piece);
@@ -76,24 +77,22 @@ void GameScene::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
     CCLOG("enddddddddddddddddddd");
-    CCObject* obj = NULL;
-    if (sizeof(Piece::array) != 0) {
-        CCLOG("%d", sizeof(Piece::array));
-        CCLOG("2222222222222");
-        CCARRAY_FOREACH_REVERSE(Piece::array, obj)
-        {
-            CCLOG("333333333333333");
-            Piece* piece = (Piece *)obj;
-            this->removeChild(piece, true);
-        }
-    }
+//    Piece::showPuzzle()
+//    CCObject* obj = NULL;
+//    if (sizeof(Piece::array) != 0) {
+//        CCLOG("%d", sizeof(Piece::array));
+//        CCLOG("2222222222222");
+//        CCARRAY_FOREACH_REVERSE(Piece::array, obj)
+//        {
+//            CCLOG("333333333333333");
+//            Piece* piece = (Piece *)obj;
+//            this->removeChild(piece, true);
+//        }
+//    }
 }
 
 void GameScene::menuCloseCallback(CCObject* pSender)
 {
-	
-
-//	Piece::showPuzzle();
 	for (int x = 0; x < 4; x++) {
 		for (int y = 0; y < 4; y++) {
 			if (Piece::pieceDeleteArray[x][y] == 1) continue;
@@ -108,9 +107,6 @@ void GameScene::menuCloseCallback(CCObject* pSender)
 		}
 		printf("\n");
 	}
-	
-
-	
 }
 
 int GameScene::check(int checkType, int x, int y)

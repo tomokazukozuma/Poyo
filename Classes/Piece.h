@@ -34,11 +34,8 @@ public:
 	// 削除するピースを格納する配列
     static int pieceDeleteArray[4][4];
     
-//    //削除するピースのインスタンスを格納
-//    static vector<Piece*> pieceInstanceArray;
-//    
-//    //Pieceのインスタンスを格納（削除用）
-//    static CCArray* array;
+    //Pieceクラスのインスタンスを格納する配列
+    static Piece* pieceInstanceArray[4][4];
     
     
     /*** method ***/
@@ -48,6 +45,16 @@ public:
     
     //imageを生成
     static Piece* generatePieceWithImage(int colorType);
+    
+    //ピースの削除
+    static void deletePiece(GameScene *gameScene);
+    
+    // Puzzleの表示
+	static void showPuzzle();
+    
+    //削除マップの表示
+    static void showDeleteMap();
+    
     
     /*** setter ***/
     
@@ -61,10 +68,8 @@ public:
     static void setElementToPieceTypeArray(int x, int y, int tag);
     
     //Pieceのインスタンスを格納
-    static void setPieceInstanceArray(Piece *piece);
-    
-    //削除マップの表示
-    static void showDeleteMap();
+    static void setInstanceToPieceInstanceArray(int x, int y, Piece *piece);
+
     
     /*** getter ***/
     
@@ -79,9 +84,6 @@ public:
     
     //ピースの幅を取得
     static int getPieceSize();
-	
-	// Puzzleの表示
-	static void showPuzzle();
 };
 
 #endif /* defined(__Poyo__Piece__) */

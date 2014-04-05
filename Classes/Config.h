@@ -11,7 +11,8 @@ enum
     TagPiece,
     Line,
 	Random = -1,
-	EMPTY = 9
+	EMPTY = 9,
+    DeleteFlag = 1
 };
 
 #endif  /* defined(__Poyo__Config__) */

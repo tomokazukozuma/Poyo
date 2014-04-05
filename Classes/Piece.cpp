@@ -8,25 +8,18 @@ using namespace std;
 int Piece::pieceSize = 100;
 int Piece::pieceTypeArray[4][4];
 int Piece::pieceDeleteArray[4][4];
-//vector<Piece*> Piece::pieceInstanceArray;
-//CCArray* Piece::array = CCArray::create();
+Piece* Piece::pieceInstanceArray[4][4];
 
 bool Piece::init()
 {
     return true;
 }
 
-//ピースのサイズを取得
-int Piece::getPieceSize()
-{
-    return Piece::pieceSize;
-}
-
 //初期のパズルを作成
 void Piece::makePazzle(GameScene *gameScene)
 {
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-    
+    int i = 0;
     for (int y = 0; y < 4; y++)
     {
         for (int x = 0; x < 4; x++)
@@ -40,12 +33,55 @@ void Piece::makePazzle(GameScene *gameScene)
                                    winSize.width * 0.5 + (x - 1.5) * Piece::pieceSize,
                                    winSize.height * 0.5 + (1.5 - y) * Piece::pieceSize));
 			Piece::setElementToPieceTypeArray(x, y, piece->getTag());
-//            piece->setTag(TagPiece);
             gameScene->addChild(piece);
+            piece->setTag(i);
+            Piece::setInstanceToPieceInstanceArray(x, y, piece);
 			Piece::pieceDeleteArray[x][y] = 0;
+            i++;
         }
     }
 	Piece::showPuzzle();
+}
+
+//CCSpriteオブジェクトを生成して返す
+Piece* Piece::generatePieceWithImage(int colorType)
+{
+    Piece *piece;
+    
+	if (colorType == Random) colorType = rand()%4;
+    switch (colorType) {
+        case 0:
+            piece = (Piece*)CCSprite::create("red.png", CCRectMake(0, 0, 50, 50));
+            piece->setType(Red);
+            break;
+        case 1:
+            piece = (Piece*)CCSprite::create("blue.png", CCRectMake(0, 0, 50, 50));
+            piece->setType(Blue);
+            break;
+        case 2:
+            piece = (Piece*)CCSprite::create("green.png", CCRectMake(0, 0, 50, 50));
+            piece->setType(Green);
+            break;
+        case 3:
+            piece = (Piece*)CCSprite::create("yellow.png", CCRectMake(0, 0, 50, 50));
+            piece->setType(Yellow);
+            break;
+        default:
+            break;
+    }
+    return piece;
+}
+
+//デリートマップから1のものを削除
+void Piece::deletePiece(GameScene *gameScene)
+{
+    for (int y; y < 4; y++) {
+        for (int x; x < 4; x++) {
+            if(Piece::pieceDeleteArray[x][y] == 1) {
+                gameScene->removeChild(Piece::pieceInstanceArray[x][y]);
+            }
+        }
+    }
 }
 
 void Piece::showPuzzle()
@@ -68,50 +104,7 @@ void Piece::showDeleteMap()
 	}
 }
 
-
-
-//CCSpriteオブジェクトを生成して返す
-Piece* Piece::generatePieceWithImage(int colorType)
-{
-    Piece *piece;
-    
-	if (colorType == Random) colorType = rand()%4;
-    switch (colorType) {
-        case 0:
-            piece = (Piece*)CCSprite::create("red.png", CCRectMake(0, 0, 50, 50));
-            piece->setType(Red);
-            piece->setTag(Red);
-            break;
-        case 1:
-            piece = (Piece*)CCSprite::create("blue.png", CCRectMake(0, 0, 50, 50));
-            piece->setType(Blue);
-            piece->setTag(Blue);
-            break;
-        case 2:
-            piece = (Piece*)CCSprite::create("green.png", CCRectMake(0, 0, 50, 50));
-            piece->setType(Green);
-            piece->setTag(Green);
-            break;
-        case 3:
-            piece = (Piece*)CCSprite::create("yellow.png", CCRectMake(0, 0, 50, 50));
-            piece->setType(Yellow);
-            piece->setTag(Yellow);
-            break;
-        default:
-            break;
-    }
-    return piece;
-}
-
-void Piece::setElementToPieceTypeArray(int x, int y, int tag)
-{
-    Piece::pieceTypeArray[x][y] = tag;
-}
-
-int Piece::getElementOfPieceTypeArray(int x, int y)
-{
-    return Piece::pieceTypeArray[x][y];
-}
+/*** setter ***/
 
 void Piece::setPos(int x, int y)
 {
@@ -119,9 +112,28 @@ void Piece::setPos(int x, int y)
     this->y = y;
 }
 
+void Piece::setElementToPieceTypeArray(int x, int y, int type)
+{
+    Piece::pieceTypeArray[x][y] = type;
+}
+
 void Piece::setType(int type)
 {
     this->type = type;
+}
+
+void Piece::setInstanceToPieceInstanceArray(int x, int y, Piece *piece)
+{
+    Piece::pieceInstanceArray[x][y] = piece;
+}
+
+
+/*** getter ***/
+
+//ピースのサイズを取得
+int Piece::getPieceSize()
+{
+    return Piece::pieceSize;
 }
 
 int Piece::getX()
@@ -139,7 +151,7 @@ int Piece::getType()
     return this->type;
 }
 
-//void Piece::setPieceInstanceArray(Piece *piece)
-//{
-//    Piece::pieceInstanceArray.push_back(piece);
-//}
+int Piece::getElementOfPieceTypeArray(int x, int y)
+{
+    return Piece::pieceTypeArray[x][y];
+}

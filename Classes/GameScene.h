@@ -26,24 +26,26 @@ public:
     // implement the "static node()" method manually
     CREATE_FUNC(GameScene);
     
-    //タッチ開始
+    // タッチ開始
     bool ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
     
-    //タッチの移動中
+    // タッチの移動中
     void ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
     
-    //タッチイベント終了時の処理
+    // タッチイベント終了時の処理
     void ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
 	
 	// 座標指定での繋がっているのかチェック
 	int check(int checkType, int x, int y);
 	
+    // 削除するピースをチェックする
 	void checkDeleteMap();
 	
 	// 探索用
 	void checkRecursive(int x, int y, int check_array[4][4], int colorType);
-	
-	//
+    
+    //ピースの削除
+    static void deletePiece(GameScene* gameScene);
 };
 
 #endif /* defined(__Poyo__GameScene__) */

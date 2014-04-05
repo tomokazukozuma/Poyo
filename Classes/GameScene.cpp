@@ -124,26 +124,26 @@ int GameScene::check(int checkType, int x, int y)
 			cells_check[i][j] = -1; //未チェック
 		}
 	}
-	CCLOG("------before check --------- x:%d y:%d",x ,y);
+//	CCLOG("------before check --------- x:%d y:%d",x ,y);
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
-			printf("%2d",cells_check[j][i]);
+			//printf("%2d",cells_check[j][i]);
 		}
-		printf("\n");
+//		printf("\n");
 	}
 	
 	checkRecursive(x, y, cells_check,targetColorType);
 	
-	CCLOG("------after check --------- x:%d y:%d",x ,y);
+//	CCLOG("------after check --------- x:%d y:%d",x ,y);
 	int count = 0;
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
-			printf("%2d",cells_check[j][i]);
+//			printf("%2d",cells_check[j][i]);
 			if (cells_check[j][i] == 1) {
 				count++;
 			}
 		}
-		printf("\n");
+//		printf("\n");
 	}
 	
 	if (count >= 3) {

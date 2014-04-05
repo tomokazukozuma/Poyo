@@ -17,6 +17,8 @@ public:
     virtual bool init();
     CREATE_FUNC(Piece);
     
+    /*** parameter ***/
+    
     //ピースの位置x
     int x;
     
@@ -32,13 +34,20 @@ public:
     //削除するピースのインスタンスを格納
     static vector<Piece*> pieceInstanceArray;
     
+    //Pieceのインスタンスを格納（削除用）
+    static CCArray* array;
+    
+    
+    /*** method ***/
+    
     //開始時のパズルを作成
     static void makePazzle(GameScene *gameScene);
     
-    //imageを設定
+    //imageを生成
     static Piece* generatePieceWithImage();
     
-    /* setter */
+    
+    /*** setter ***/
     
     //インスタンスに位置をセット
     void setPos(int x, int y);
@@ -52,7 +61,8 @@ public:
     //Pieceのインスタンスを格納
     static void setPieceInstanceArray(Piece *piece);
     
-    /* getter */
+    
+    /*** getter ***/
     
     //要素の取得
     static int getElementOfPieceTypeArray(int x, int y);

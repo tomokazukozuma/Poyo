@@ -8,6 +8,7 @@ using namespace std;
 int Piece::pieceSize = 100;
 int Piece::pieceTypeArray[4][4];
 vector<Piece*> Piece::pieceInstanceArray;
+CCArray* Piece::array = CCArray::create();
 
 bool Piece::init()
 {
@@ -36,6 +37,7 @@ void Piece::makePazzle(GameScene *gameScene)
                                    winSize.width * 0.5 + (x - 1.5) * Piece::pieceSize,
                                    winSize.height * 0.5 + (1.5 - y) * Piece::pieceSize));
 			Piece::setElementToPieceTypeArray(x, y, piece->getTag());
+//            piece->setTag(TagPiece);
             gameScene->addChild(piece);
         }
     }
@@ -44,9 +46,9 @@ void Piece::makePazzle(GameScene *gameScene)
 
 void Piece::showPuzzle()
 {
-	for (int x = 0; x < 4; x++) {
-		for (int y = 0; y < 4; y++) {
-			printf("%2d",getElementOfPieceTypeArray(y, x));
+	for (int y = 0; y < 4; y++) {
+		for (int x = 0; x < 4; x++) {
+			printf("%2d",getElementOfPieceTypeArray(x, y));
 		}
 		printf("\n");
 	}

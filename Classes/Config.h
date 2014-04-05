@@ -8,6 +8,7 @@ enum
     Green,
     Yellow,
     PieceCount,
+    TagPiece,
     Line
 };
 

@@ -73,31 +73,39 @@ void GameScene::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     CCPoint touchPoint = pDirector->convertToGL(pTouch->getLocationInView());
 
     CCObject *obj = NULL;
-    CCARRAY_FOREACH_REVERSE(this->getChildren(), obj) {
-        
+    CCARRAY_FOREACH(this->getChildren(), obj) {
         Piece *piece = (Piece *)obj;
         CCRect pieceRect = piece->boundingBox();
-        
+        CCLOG("%d", piece->getType());
         if (pieceRect.containsPoint(touchPoint))
         {
-            Piece::setElementToPieceTypeArray(piece->getX(), piece->getY(), 0);
-            Piece::setPieceInstanceArray(piece);
+            Piece::array->addObject(piece);
+//            Piece::setElementToPieceTypeArray(piece->getX(), piece->getY(), 0);
+//            Piece::setPieceInstanceArray(piece);
 //            piece->removeFromParentAndCleanup(true);
         }
     }
 }
 
+//タッチエンド処理（ピースを削除する）
 void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
     CCLOG("enddddddddddddddddddd");
-
-    vector<Piece*>::iterator it = Piece::pieceInstanceArray.begin();
-    for( it = Piece::pieceInstanceArray.begin(); it != Piece::pieceInstanceArray.end(); ++it )
-	{
-        CCLOG("%s", "100");
-//		cout << *it << endl;
-        it = Piece::pieceInstanceArray.erase(it);
+    CCObject* obj = NULL;
+    if (sizeof(Piece::array) != 0) {
+        CCLOG("2222222222222");
+        CCARRAY_FOREACH_REVERSE(Piece::array, obj)
+        {
+            Piece* piece = (Piece *)obj;
+            this->removeChild(piece, true);
+        }
     }
+//    vector<Piece*>::iterator it = Piece::pieceInstanceArray.begin();
+//    for( it = Piece::pieceInstanceArray.begin(); it != Piece::pieceInstanceArray.end(); ++it )
+//	{
+//        CCLOG("%s", "100");
+//        it = Piece::pieceInstanceArray.erase(it);
+//    }
 }
 
 void GameScene::menuCloseCallback(CCObject* pSender)

@@ -30,6 +30,9 @@ public:
     
     //ピースのタイプを格納する配列
     static int pieceTypeArray[4][4];
+	
+	// 削除するピースを格納する配列
+    static int pieceDeleteArray[4][4];
     
     //削除するピースのインスタンスを格納
     static vector<Piece*> pieceInstanceArray;

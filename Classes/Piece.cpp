@@ -58,6 +58,17 @@ void Piece::showPuzzle()
 	}
 }
 
+void Piece::showDeleteMap()
+{
+    for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			printf("%2d",Piece::pieceDeleteArray[j][i]);
+		}
+		printf("\n");
+	}
+}
+
+
 
 //CCSpriteオブジェクトを生成して返す
 Piece* Piece::generatePieceWithImage(int colorType)

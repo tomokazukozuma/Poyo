@@ -77,7 +77,7 @@ void GameScene::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
     CCLOG("enddddddddddddddddddd");
-//    Piece::showPuzzle()
+    Piece::showDeleteMap();
 //    CCObject* obj = NULL;
 //    if (sizeof(Piece::array) != 0) {
 //        CCLOG("%d", sizeof(Piece::array));
@@ -91,8 +91,8 @@ void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 //    }
 }
 
-void GameScene::menuCloseCallback(CCObject* pSender)
-{
+
+void GameScene::checkDeleteMap() {
 	for (int x = 0; x < 4; x++) {
 		for (int y = 0; y < 4; y++) {
 			if (Piece::pieceDeleteArray[x][y] == 1) continue;
@@ -109,6 +109,8 @@ void GameScene::menuCloseCallback(CCObject* pSender)
 	}
 }
 
+
+
 int GameScene::check(int checkType, int x, int y)
 {
 	if (Piece::pieceTypeArray[x][y] == EMPTY) return 0;
@@ -120,26 +122,26 @@ int GameScene::check(int checkType, int x, int y)
 			cells_check[i][j] = -1; //未チェック
 		}
 	}
-	CCLOG("------before check --------- x:%d y:%d",x ,y);
+//	CCLOG("------before check --------- x:%d y:%d",x ,y);
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
-			printf("%2d",cells_check[j][i]);
+			//printf("%2d",cells_check[j][i]);
 		}
-		printf("\n");
+//		printf("\n");
 	}
 	
 	checkRecursive(x, y, cells_check,targetColorType);
 	
-	CCLOG("------after check --------- x:%d y:%d",x ,y);
+//	CCLOG("------after check --------- x:%d y:%d",x ,y);
 	int count = 0;
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
-			printf("%2d",cells_check[j][i]);
+//			printf("%2d",cells_check[j][i]);
 			if (cells_check[j][i] == 1) {
 				count++;
 			}
 		}
-		printf("\n");
+//		printf("\n");
 	}
 	
 	if (count >= 3) {

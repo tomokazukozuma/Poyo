@@ -63,6 +63,8 @@ public:
     //Pieceのインスタンスを格納
     static void setPieceInstanceArray(Piece *piece);
     
+    //削除マップの表示
+    static void showDeleteMap();
     
     /*** getter ***/
     

@@ -7,6 +7,7 @@ using namespace std;
 
 int Piece::pieceSize = 100;
 int Piece::pieceTypeArray[4][4];
+int Piece::pieceDeleteArray[4][4];
 vector<Piece*> Piece::pieceInstanceArray;
 
 bool Piece::init()
@@ -29,7 +30,9 @@ void Piece::makePazzle(GameScene *gameScene)
     {
         for (int x = 0; x < 4; x++)
         {
-            Piece *piece = (Piece*)Piece::generatePieceWithImage(Random);
+			int nextColor = Random;
+			if (x == 3) nextColor = Green;
+            Piece *piece = (Piece*)Piece::generatePieceWithImage(nextColor);
             piece->setPos(x, y);
             piece->setContentSize(CCSize(pieceSize, pieceSize));
             piece->setPosition(ccp(
@@ -37,6 +40,7 @@ void Piece::makePazzle(GameScene *gameScene)
                                    winSize.height * 0.5 + (1.5 - y) * Piece::pieceSize));
 			Piece::setElementToPieceTypeArray(x, y, piece->getTag());
             gameScene->addChild(piece);
+			Piece::pieceDeleteArray[x][y] = 0;
         }
     }
 	Piece::showPuzzle();

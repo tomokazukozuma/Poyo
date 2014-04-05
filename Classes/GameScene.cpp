@@ -91,8 +91,8 @@ void GameScene::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
         
         if (pieceRect.containsPoint(touchPoint))
         {
-            Piece::setElementToPieceTypeArray(piece->getX(), piece->getY(), 0);
-            Piece::setPieceInstanceArray(piece);
+          //  Piece::setElementToPieceTypeArray(piece->getX(), piece->getY(), 0);
+         //   Piece::setPieceInstanceArray(piece);
 //            piece->removeFromParentAndCleanup(true);
         }
     }
@@ -107,15 +107,30 @@ void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 	{
         CCLOG("%s", "100");
 //		cout << *it << endl;
-        it = Piece::pieceInstanceArray.erase(it);
+       // it = Piece::pieceInstanceArray.erase(it);
     }
 }
 
 void GameScene::menuCloseCallback(CCObject* pSender)
 {
+	
 
 //	Piece::showPuzzle();
-	check(1, 2, 2);
+	for (int x = 0; x < 4; x++) {
+		for (int y = 0; y < 4; y++) {
+			if (Piece::pieceDeleteArray[x][y] == 1) continue;
+			GameScene::check(1, x, y);
+		}
+	}
+	printf("\n");
+	
+	for (int i = 0; i < 4; i++) {
+		for (int j = 0; j < 4; j++) {
+			printf("%2d",Piece::pieceDeleteArray[j][i]);
+		}
+		printf("\n");
+	}
+	
 
 	
 }
@@ -131,7 +146,7 @@ int GameScene::check(int checkType, int x, int y)
 			cells_check[i][j] = -1; //未チェック
 		}
 	}
-	CCLOG("------before check ---------");
+	CCLOG("------before check --------- x:%d y:%d",x ,y);
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
 			printf("%2d",cells_check[j][i]);
@@ -141,22 +156,34 @@ int GameScene::check(int checkType, int x, int y)
 	
 	checkRecursive(x, y, cells_check,targetColorType);
 	
-	CCLOG("------after check ---------");
+	CCLOG("------after check --------- x:%d y:%d",x ,y);
+	int count = 0;
 	for (int i = 0; i < 4; i++) {
 		for (int j = 0; j < 4; j++) {
 			printf("%2d",cells_check[j][i]);
+			if (cells_check[j][i] == 1) {
+				count++;
+			}
 		}
 		printf("\n");
 	}
 	
-	
+	if (count >= 3) {
+		for (int i = 0; i < 4; i++) {
+			for (int j = 0; j < 4; j++) {
+				if (cells_check[j][i] == 1) {
+					Piece::pieceDeleteArray[j][i] = 1;
+				}
+			}
+		}
+	}
 	
 	return 0;
 }
 
 void GameScene::checkRecursive(int x, int y, int check_array[4][4], int colorType)
 {
-	if (0 < check_array[x][y]) return;
+	if (x > 3 || y > 3 || x < 0 || y < 0 ||0 < check_array[x][y]) return;
 	if (Piece::pieceTypeArray[x][y] != colorType) {
 		check_array[x][y] = 2;
 		return;

@@ -25,7 +25,7 @@ public:
     //ピースの位置y
     int y;
     
-    //ピースのタイプ
+    //ピースのタイプ（red, blue, green, yellow）
     int type;
     
     //ピースのタイプを格納する配列
@@ -54,6 +54,7 @@ public:
     
     //削除マップの表示
     static void showDeleteMap();
+
     
     
     /*** setter ***/
@@ -64,17 +65,15 @@ public:
     //インスタンスにタイプをセット
     void setType(int type);
     
-    //要素の代入
-    static void setElementToPieceTypeArray(int x, int y, int tag);
-    
-    //Pieceのインスタンスを格納
+    //インスタンスをセット
     static void setInstanceToPieceInstanceArray(int x, int y, Piece *piece);
+    
 
     
     /*** getter ***/
     
     //要素の取得
-    static int getElementOfPieceTypeArray(int x, int y);
+    static Piece* getInstanceOfPieceInstanceArray(int x, int y);
     
     int getX();
     

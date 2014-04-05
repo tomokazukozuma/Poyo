@@ -72,26 +72,14 @@ void GameScene::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 //タッチエンド処理（ピースを削除する）
 void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
-    CCLOG("enddddddddddddddddddd");
     Piece::showDeleteMap();
-    this->deletePiece(this);
+    Piece::showPuzzle();
+    // ピースの削除
+    Piece::deletePiece(this);
+    
+    // pieceInstanceArrayの空のtokoroni9を格納
+    Piece::showPuzzle();
 }
-
-//ピースの削除
-void GameScene::deletePiece(GameScene* gameScene)
-{
-    Piece* piece;
-    for (int y =0; y < 4; y++) {
-        for (int x = 0; x < 4; x++) {
-            if(Piece::pieceDeleteArray[x][y] == DeleteFlag) {
-                piece = (Piece*)gameScene->getChildByTag(Piece::pieceInstanceArray[x][y]->getTag());
-                gameScene->removeChild(piece);
-                Piece::pieceDeleteArray[x][y] =0;
-            }
-        }
-    }
-}
-
 
 void GameScene::checkDeleteMap() {
 	for (int x = 0; x < 4; x++) {

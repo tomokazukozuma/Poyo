@@ -43,9 +43,6 @@ public:
 	
 	// 探索用
 	void checkRecursive(int x, int y, int check_array[4][4], int colorType);
-    
-    //ピースの削除
-    static void deletePiece(GameScene* gameScene);
 };
 
 #endif /* defined(__Poyo__GameScene__) */

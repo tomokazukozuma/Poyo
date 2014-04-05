@@ -6,7 +6,6 @@ USING_NS_CC;
 using namespace std;
 
 int Piece::pieceSize = 100;
-int Piece::pieceTypeArray[4][4];
 int Piece::pieceDeleteArray[4][4];
 Piece* Piece::pieceInstanceArray[4][4];
 
@@ -32,11 +31,10 @@ void Piece::makePazzle(GameScene *gameScene)
             piece->setPosition(ccp(
                                    winSize.width * 0.5 + (x - 1.5) * Piece::pieceSize,
                                    winSize.height * 0.5 + (1.5 - y) * Piece::pieceSize));
-			Piece::setElementToPieceTypeArray(x, y, piece->getTag());
-            gameScene->addChild(piece);
             piece->setTag(i);
             Piece::setInstanceToPieceInstanceArray(x, y, piece);
 			Piece::pieceDeleteArray[x][y] = 0;
+            gameScene->addChild(piece);
             i++;
         }
     }
@@ -75,10 +73,13 @@ Piece* Piece::generatePieceWithImage(int colorType)
 //デリートマップから1のものを削除
 void Piece::deletePiece(GameScene *gameScene)
 {
-    for (int y; y < 4; y++) {
-        for (int x; x < 4; x++) {
-            if(Piece::pieceDeleteArray[x][y] == 1) {
-                gameScene->removeChild(Piece::pieceInstanceArray[x][y]);
+    Piece* piece;
+    for (int y =0; y < 4; y++) {
+        for (int x = 0; x < 4; x++) {
+            if(Piece::pieceDeleteArray[x][y] == DeleteFlag) {
+                piece = (Piece*)gameScene->getChildByTag(Piece::pieceInstanceArray[x][y]->getTag());
+                gameScene->removeChild(piece);
+                Piece::pieceDeleteArray[x][y] =0;
             }
         }
     }
@@ -88,7 +89,7 @@ void Piece::showPuzzle()
 {
 	for (int y = 0; y < 4; y++) {
 		for (int x = 0; x < 4; x++) {
-			printf("%2d",getElementOfPieceTypeArray(x, y));
+			printf("%2d",Piece::pieceInstanceArray[x][y]->getType());
 		}
 		printf("\n");
 	}
@@ -110,11 +111,6 @@ void Piece::setPos(int x, int y)
 {
     this->x = x;
     this->y = y;
-}
-
-void Piece::setElementToPieceTypeArray(int x, int y, int type)
-{
-    Piece::pieceTypeArray[x][y] = type;
 }
 
 void Piece::setType(int type)
@@ -151,7 +147,7 @@ int Piece::getType()
     return this->type;
 }
 
-int Piece::getElementOfPieceTypeArray(int x, int y)
+Piece* Piece::getInstanceOfPieceInstanceArray(int x, int y)
 {
-    return Piece::pieceTypeArray[x][y];
+    return Piece::pieceInstanceArray[x][y];
 }

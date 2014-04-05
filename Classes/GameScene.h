@@ -35,11 +35,15 @@ public:
     //タッチイベント終了時の処理
     void ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent);
 	
-	// パズルのチェック
+	// 座標指定での繋がっているのかチェック
 	int check(int checkType, int x, int y);
+	
+	void checkDeleteMap();
 	
 	// 探索用
 	void checkRecursive(int x, int y, int check_array[4][4], int colorType);
+	
+	//
 };
 
 #endif /* defined(__Poyo__GameScene__) */

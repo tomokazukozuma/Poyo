@@ -92,8 +92,9 @@ void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 void GameScene::menuCloseCallback(CCObject* pSender)
 {
 	
+}
 
-//	Piece::showPuzzle();
+void GameScene::checkDeleteMap() {
 	for (int x = 0; x < 4; x++) {
 		for (int y = 0; y < 4; y++) {
 			if (Piece::pieceDeleteArray[x][y] == 1) continue;
@@ -108,10 +109,9 @@ void GameScene::menuCloseCallback(CCObject* pSender)
 		}
 		printf("\n");
 	}
-	
-
-	
 }
+
+
 
 int GameScene::check(int checkType, int x, int y)
 {

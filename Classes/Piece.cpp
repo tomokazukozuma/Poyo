@@ -25,18 +25,16 @@ void Piece::makePazzle(GameScene *gameScene)
 {
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
     
-    for (int x = 0; x < 4; x++)
+    for (int y = 0; y < 4; y++)
     {
-        for (int y = 0; y < 4; y++)
+        for (int x = 0; x < 4; x++)
         {
             Piece *piece = (Piece*)Piece::generatePieceWithImage();
             piece->setPos(x, y);
-            CCLOG("%d", piece->getTag());
             piece->setContentSize(CCSize(pieceSize, pieceSize));
             piece->setPosition(ccp(
                                    winSize.width * 0.5 + (x - 1.5) * Piece::pieceSize,
-                                   winSize.height * 0.5 + (y - 1.5) * Piece::pieceSize));
-//            piece->setTag(Piece);
+                                   winSize.height * 0.5 + (1.5 - y) * Piece::pieceSize));
 			Piece::setElementToPieceTypeArray(x, y, piece->getTag());
             gameScene->addChild(piece);
         }
@@ -48,7 +46,7 @@ void Piece::showPuzzle()
 {
 	for (int x = 0; x < 4; x++) {
 		for (int y = 0; y < 4; y++) {
-			printf("%2d",getElementOfPieceTypeArray(x, y));
+			printf("%2d",getElementOfPieceTypeArray(y, x));
 		}
 		printf("\n");
 	}

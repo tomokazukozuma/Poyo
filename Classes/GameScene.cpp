@@ -92,9 +92,11 @@ void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     CCLOG("enddddddddddddddddddd");
 
     vector<Piece*>::iterator it = Piece::pieceInstanceArray.begin();
-    while( it != Piece::pieceInstanceArray.end() )  // 末尾要素まで
-    {
-        
+    for( it = Piece::pieceInstanceArray.begin(); it != Piece::pieceInstanceArray.end(); ++it )
+	{
+        CCLOG("%s", "100");
+//		cout << *it << endl;
+        it = Piece::pieceInstanceArray.erase(it);
     }
 }
 

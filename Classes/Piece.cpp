@@ -96,28 +96,27 @@ bool Piece::deletePiece(GameScene *gameScene)
 	return isDeletePiece;
 }
 
-//（途中）
-//ピースを移動させる
-void Piece::movePiece()
-{
-    for (int y =0; y < MaxPieceY; y++) {
-        for (int x = 0; x < MaxPieceX; x++) {
-            if(Piece::pieceDeleteArray[x][y] == DeleteFlag) {
-                Piece::pieceDeleteArray[x][y] =0;
-            }
-        }
-    }
-}
-
 //パズルを描画
 void Piece::drawPazzle(GameScene* gameScene)
 {
-    int i =0;
-    for (int y = 0; y < MaxPieceY; y++) {
-        for (int x = 0; x < MaxPieceX; x++) {
-            Piece::pieceInstanceArray[x][y]->setTag(i);
-            gameScene->addChild(Piece::pieceInstanceArray[x][y]);
-            ++i;
+    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+    
+    int duration = 1.0f;
+    CCObject* obj;
+    CCARRAY_FOREACH_REVERSE(gameScene->getChildren(), obj) {
+        Piece* piece = (Piece*)obj;
+        int pieceTag = piece->getTag();
+        for (int y = 0; y < MaxPieceY; y++) {
+            for (int x = 0; x < MaxPieceX; x++) {
+                int elementTag = Piece::pieceInstanceArray[x][y]->getTag();
+                if (pieceTag == elementTag && piece->getY() != y) {
+                    CCMoveTo* actionMove = CCMoveTo::create(duration, ccp(
+                                                                          winSize.width * 0.5 + (x - MaxPieceX/2) * Piece::getPieceSize(),
+                                                                          winSize.height * 0.5 + (MaxPieceY/2 - y) * Piece::pieceSize));
+                    Piece::pieceInstanceArray[x][y]->runAction(actionMove);
+                    piece->setPos(x, y);
+                }
+            }
         }
     }
 }
@@ -152,18 +151,6 @@ void Piece::setPos(int x, int y)
     this->y = y;
 }
 
-//void Piece::setNextPos(int nextX, int nextY)
-//{
-//    this->nextX = nextX;
-//    this->nextY = nextY;
-//}
-//
-//void Piece::initNextPos()
-//{
-//    this->nextX = NoMove;
-//    this->nextY = NoMove;
-//}
-
 void Piece::setType(int type)
 {
     this->type = type;
@@ -192,16 +179,6 @@ int Piece::getY()
 {
     return this->y;
 }
-
-//int Piece::getNextX()
-//{
-//    return this->nextX;
-//}
-//
-//int Piece::getNextY()
-//{
-//    return this->nextY;
-//}
 
 int Piece::getType()
 {

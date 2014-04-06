@@ -25,7 +25,7 @@ void Piece::makePazzle(GameScene *gameScene)
         {
 			int nextColor = Random;
 			if (x == 3) nextColor = Green;
-            Piece *piece = (Piece*)Piece::generatePieceWithImage(nextColor);
+            Piece *piece = Piece::generatePieceWithImage(nextColor);
             piece->setPos(x, y);
             piece->setTag(i);
             piece->setContentSize(CCSize(pieceSize, pieceSize));
@@ -97,7 +97,7 @@ void Piece::movePiece()
     }
 }
 
-//ピースを描画
+//パズルを描画
 void Piece::drawPazzle()
 {
     

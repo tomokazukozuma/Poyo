@@ -12,7 +12,8 @@ enum
     Line,
 	Random = -1,
 	EMPTY = 9,
-    DeleteFlag = 1
+    DeleteFlag = 1,
+    NoMove = -1
 };
 
 #endif  /* defined(__Poyo__Config__) */

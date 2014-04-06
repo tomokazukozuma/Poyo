@@ -228,9 +228,6 @@
 		BF1C47F01293687400B63C5D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BF1C47EA1293683800B63C5D /* QuartzCore.framework */; };
 		C62C495D18E6C42000CE5D2D /* GameScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C62C495018E6C42000CE5D2D /* GameScene.cpp */; };
 		C62C495E18E6C42000CE5D2D /* Piece.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C62C495118E6C42000CE5D2D /* Piece.cpp */; };
-		C62C495F18E6C42000CE5D2D /* ResultScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C62C495618E6C42000CE5D2D /* ResultScene.cpp */; };
-		C62C496018E6C42000CE5D2D /* StaminaGauge.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C62C495818E6C42000CE5D2D /* StaminaGauge.cpp */; };
-		C62C496118E6C42000CE5D2D /* Player.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C62C495A18E6C42000CE5D2D /* Player.cpp */; };
 		C62C496218E6C42000CE5D2D /* TitleScene.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C62C495C18E6C42000CE5D2D /* TitleScene.cpp */; };
 		C62C496918E6D29700CE5D2D /* brush.png in Resources */ = {isa = PBXBuildFile; fileRef = C62C496818E6D29700CE5D2D /* brush.png */; };
 		C62C496B18E6D43600CE5D2D /* line.png in Resources */ = {isa = PBXBuildFile; fileRef = C62C496A18E6D43600CE5D2D /* line.png */; };
@@ -722,13 +719,7 @@
 		C62C495118E6C42000CE5D2D /* Piece.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Piece.cpp; path = ../Classes/Piece.cpp; sourceTree = "<group>"; };
 		C62C495218E6C42000CE5D2D /* Piece.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Piece.h; path = ../Classes/Piece.h; sourceTree = "<group>"; };
 		C62C495318E6C42000CE5D2D /* GameScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GameScene.h; path = ../Classes/GameScene.h; sourceTree = "<group>"; };
-		C62C495418E6C42000CE5D2D /* Player.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Player.h; path = ../Classes/Player.h; sourceTree = "<group>"; };
 		C62C495518E6C42000CE5D2D /* Config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Config.h; path = ../Classes/Config.h; sourceTree = "<group>"; };
-		C62C495618E6C42000CE5D2D /* ResultScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ResultScene.cpp; path = ../Classes/ResultScene.cpp; sourceTree = "<group>"; };
-		C62C495718E6C42000CE5D2D /* ResultScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ResultScene.h; path = ../Classes/ResultScene.h; sourceTree = "<group>"; };
-		C62C495818E6C42000CE5D2D /* StaminaGauge.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = StaminaGauge.cpp; path = ../Classes/StaminaGauge.cpp; sourceTree = "<group>"; };
-		C62C495918E6C42000CE5D2D /* StaminaGauge.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StaminaGauge.h; path = ../Classes/StaminaGauge.h; sourceTree = "<group>"; };
-		C62C495A18E6C42000CE5D2D /* Player.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = Player.cpp; path = ../Classes/Player.cpp; sourceTree = "<group>"; };
 		C62C495B18E6C42000CE5D2D /* TitleScene.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TitleScene.h; path = ../Classes/TitleScene.h; sourceTree = "<group>"; };
 		C62C495C18E6C42000CE5D2D /* TitleScene.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = TitleScene.cpp; path = ../Classes/TitleScene.cpp; sourceTree = "<group>"; };
 		C62C496818E6D29700CE5D2D /* brush.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = brush.png; sourceTree = "<group>"; };
@@ -1267,12 +1258,6 @@
 				C62C495218E6C42000CE5D2D /* Piece.h */,
 				C62C495018E6C42000CE5D2D /* GameScene.cpp */,
 				C62C495318E6C42000CE5D2D /* GameScene.h */,
-				C62C495618E6C42000CE5D2D /* ResultScene.cpp */,
-				C62C495718E6C42000CE5D2D /* ResultScene.h */,
-				C62C495818E6C42000CE5D2D /* StaminaGauge.cpp */,
-				C62C495918E6C42000CE5D2D /* StaminaGauge.h */,
-				C62C495A18E6C42000CE5D2D /* Player.cpp */,
-				C62C495418E6C42000CE5D2D /* Player.h */,
 				C62C495C18E6C42000CE5D2D /* TitleScene.cpp */,
 				C62C495B18E6C42000CE5D2D /* TitleScene.h */,
 				1AFAF8B316D35DE700DB1158 /* AppDelegate.cpp */,
@@ -1871,7 +1856,6 @@
 				15A3D91E1682F7D5002FB0C5 /* b2PolygonAndCircleContact.cpp in Sources */,
 				15A3D91F1682F7D5002FB0C5 /* b2PolygonContact.cpp in Sources */,
 				15A3D9201682F7D5002FB0C5 /* b2DistanceJoint.cpp in Sources */,
-				C62C495F18E6C42000CE5D2D /* ResultScene.cpp in Sources */,
 				15A3D9211682F7D5002FB0C5 /* b2FrictionJoint.cpp in Sources */,
 				15A3D9221682F7D5002FB0C5 /* b2GearJoint.cpp in Sources */,
 				15A3D9231682F7D5002FB0C5 /* b2Joint.cpp in Sources */,
@@ -1948,7 +1932,6 @@
 				15A3DA4E1682F826002FB0C5 /* CCControlSaturationBrightnessPicker.cpp in Sources */,
 				15A3DA4F1682F826002FB0C5 /* CCControlSlider.cpp in Sources */,
 				C62C496218E6C42000CE5D2D /* TitleScene.cpp in Sources */,
-				C62C496018E6C42000CE5D2D /* StaminaGauge.cpp in Sources */,
 				15A3DA501682F826002FB0C5 /* CCControlStepper.cpp in Sources */,
 				15A3DA511682F826002FB0C5 /* CCControlSwitch.cpp in Sources */,
 				15A3DA521682F826002FB0C5 /* CCControlUtils.cpp in Sources */,
@@ -2000,7 +1983,6 @@
 				1A8F3B82175E05DA00049216 /* spine-cocos2dx.cpp in Sources */,
 				1AB87035175E0A84005D39BF /* WebSocket.cpp in Sources */,
 				375BD4C51868411B0024609E /* TriggerMng.cpp in Sources */,
-				C62C496118E6C42000CE5D2D /* Player.cpp in Sources */,
 				1A9CE8781765A12C000E3062 /* AssetsManager.cpp in Sources */,
 				379BB99A17F03F3700829B88 /* CCArmatureAnimation.cpp in Sources */,
 				379BB99B17F03F3700829B88 /* CCProcessBase.cpp in Sources */,

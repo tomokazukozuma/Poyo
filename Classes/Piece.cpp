@@ -130,11 +130,17 @@ void Piece::setPos(int x, int y)
     this->y = y;
 }
 
-//void Piece::setNextPos(int nextX, int nextY)
-//{
-//    this->nextX = nextX;
-//    this->nextY = nextY;
-//}
+void Piece::setNextPos(int nextX, int nextY)
+{
+    this->nextX = nextX;
+    this->nextY = nextY;
+}
+
+void Piece::initNextPos()
+{
+    this->nextX = NoMove;
+    this->nextY = NoMove;
+}
 
 void Piece::setType(int type)
 {
@@ -165,22 +171,22 @@ int Piece::getY()
     return this->y;
 }
 
-//int Piece::getNextX()
-//{
-//    return this->nextX;
-//}
-//
-//int Piece::getNextY()
-//{
-//    return this->nextY;
-//}
+int Piece::getNextX()
+{
+    return this->nextX;
+}
+
+int Piece::getNextY()
+{
+    return this->nextY;
+}
 
 int Piece::getType()
 {
     return this->type;
 }
 
-// 配列にインスタンスを取得
+// 配列のインスタンスを取得
 Piece* Piece::getInstanceOfPieceInstanceArray(int x, int y)
 {
     return Piece::pieceInstanceArray[x][y];

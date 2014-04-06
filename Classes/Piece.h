@@ -25,11 +25,11 @@ public:
     //ピースの位置y
     int y;
     
-//    //ピースの次の位置x
-//    int nextX;
-//    
-//    //ピースの次の位置y
-//    int nextY;
+    //ピースの次の位置x
+    int nextX;
+    
+    //ピースの次の位置y
+    int nextY;
     
     //ピースのタイプ（red, blue, green, yellow）
     int type;
@@ -79,6 +79,9 @@ public:
     
     //インスタンスに次の位置をセット
     void setNextPos(int nextX, int nextY);
+    
+    //nextX, nextYの初期化
+    void initNextPos();
     
     //インスタンスにタイプをセット
     void setType(int type);

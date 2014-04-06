@@ -69,7 +69,8 @@ void GameScene::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 //タッチエンド処理（ピースを削除する）
 void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
-//    Piece::showDeleteMap();
+    Piece::showDeleteMap();
+	printf("\n");
     Piece::showPuzzle();
     
     // ピースの削除
@@ -78,10 +79,20 @@ void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 	printf("before fall\n");
 	Piece::showPuzzle();
     
-    //　ピースの落ちる処理
-	while (GameScene::fallOnePiece() != 0) {
+
+	
+	// ピースの削除処理と落ちる処理（削除処理が成功しない）
+	do {
+		//　ピースの落ちる処理
+		while (GameScene::fallOnePiece() != 0) {
+		}
+		//　消すピースのチェック
+		GameScene::checkDeleteMap();
 		
-	}
+		Piece::showDeleteMap();
+		printf("\n");
+		
+	} while (Piece::deletePiece(this) == true);
 	
 	
 	printf("after fal\n");
@@ -118,16 +129,18 @@ int GameScene::fallOnePiece()
 	return n;
 }
 
-void GameScene::checkDeleteMap()
+bool GameScene::checkDeleteMap()
 {
+	bool checkFlag = false;
 	for (int x = 0; x < MaxPieceX; x++) {
 		for (int y = 0; y < MaxPieceY; y++) {
 			if (Piece::pieceDeleteArray[x][y] == DeleteFlag) continue;
-			GameScene::check(1, x, y);
+			if (GameScene::check(1, x, y) >= thresholdOfDeletePiece) checkFlag = true;
 		}
 	}
 	printf("\n");
-    Piece::showDeleteMap();
+ //   Piece::showDeleteMap();
+	return checkFlag;
 }
 
 
@@ -135,34 +148,43 @@ void GameScene::checkDeleteMap()
 int GameScene::check(int checkType, int x, int y)
 {
 	if (Piece::pieceInstanceArray[x][y] == NULL) return 0;
-	int targetColorType = Piece::pieceInstanceArray[x][y]->getTag();
+	int targetColorType = Piece::pieceInstanceArray[x][y]->getType();
 	int cells_check[MaxPieceX][MaxPieceY];
 	for (int tempY = 0; tempY < MaxPieceY; tempY++) {
 		for (int tempX = 0; tempX < MaxPieceX; tempX++) {
-			cells_check[tempX][tempY] = -1; //未チェック
+			if (Piece::pieceInstanceArray[tempX][tempY] -> getType() == EMPTY) {
+				cells_check[tempX][tempY] = 2;
+			} else {
+				cells_check[tempX][tempY] = -1; //未チェック
+			}
+
 		}
 	}
+	
     
-    //	CCLOG("------before check --------- x:%d y:%d",x ,y);
+    	CCLOG("------before check --------- x:%d y:%d",x ,y);
 	for (int tempY = 0; tempY < MaxPieceY; tempY++) {
 		for (int tempX = 0; tempX < MaxPieceX; tempX++) {
-			printf("%d",cells_check[tempX][tempY]);
+			printf("%3d",cells_check[tempX][tempY]);
 		}
+		printf("\n");
 	}
 	
 	checkRecursive(x, y, cells_check,targetColorType);
 	
-//	CCLOG("------after check --------- x:%d y:%d",x ,y);
+	CCLOG("------after check --------- x:%d y:%d",x ,y);
 	int count = 0;
 	for (int tempY = 0; tempY < MaxPieceY; tempY++) {
 		for (int tempX = 0; tempX < MaxPieceX; tempX++) {
+			printf("%3d",cells_check[tempX][tempY]);
 			if (cells_check[tempX][tempY] == 1) {
 				count++;
 			}
 		}
+		printf("\n");
 	}
 	
-	if (count >= 3) {
+	if (count >= thresholdOfDeletePiece) {
 		for (int tempY = 0; tempY < MaxPieceY; tempY++) {
 			for (int tempX = 0; tempX < MaxPieceX; tempX++) {
 				if (cells_check[tempX][tempY] == 1) {
@@ -177,8 +199,8 @@ int GameScene::check(int checkType, int x, int y)
 
 void GameScene::checkRecursive(int x, int y, int check_array[MaxPieceX][MaxPieceY], int colorType)
 {
-	if (x > 3 || y > 3 || x < 0 || y < 0 ||0 < check_array[x][y]) return;
-	if (Piece::pieceInstanceArray[x][y]->getTag() != colorType) {
+	if (x > MaxPieceX - 1 || y > MaxPieceY - 1 || x < 0 || y < 0 ||0 < check_array[x][y]) return;
+	if (Piece::pieceInstanceArray[x][y]->getType() != colorType) {
 		check_array[x][y] = 2;
 		return;
 	}

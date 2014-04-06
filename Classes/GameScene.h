@@ -40,7 +40,7 @@ public:
 	int check(int checkType, int x, int y);
 	
     // 削除するピースをチェックする
-	void checkDeleteMap();
+	bool checkDeleteMap();
 	
 	// 探索用
 	void checkRecursive(int x, int y, int check_array[MaxPieceX][MaxPieceY], int colorType);

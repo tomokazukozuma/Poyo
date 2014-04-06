@@ -56,7 +56,7 @@ public:
     static Piece* generatePieceWithImage(int colorType);
     
     //ピースの削除
-    static void deletePiece(GameScene *gameScene);
+    static bool deletePiece(GameScene *gameScene);
     
     // Puzzleの表示
 	static void showPuzzle();

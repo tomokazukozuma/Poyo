@@ -78,9 +78,10 @@ Piece* Piece::generatePieceWithImage(int colorType)
 }
 
 //デリートマップから1のものを削除
-void Piece::deletePiece(GameScene *gameScene)
+bool Piece::deletePiece(GameScene *gameScene)
 {
     Piece *piece;
+	bool isDeletePiece = false;
     for (int y =0; y < MaxPieceY; y++) {
         for (int x = 0; x < MaxPieceX; x++) {
             if(Piece::pieceDeleteArray[x][y] == DeleteFlag) {
@@ -88,9 +89,11 @@ void Piece::deletePiece(GameScene *gameScene)
                 gameScene->removeChild(piece);
 				Piece::pieceInstanceArray[x][y] = emptyPiece;
                 Piece::pieceDeleteArray[x][y] =0;
+				isDeletePiece = true;
             }
         }
     }
+	return isDeletePiece;
 }
 
 //（途中）

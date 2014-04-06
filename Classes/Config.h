@@ -16,6 +16,7 @@ enum
     NoMove = -1,
     MaxPieceX = 5,
     MaxPieceY = 8,
+	thresholdOfDeletePiece = 3
 };
 
 #endif  /* defined(__Poyo__Config__) */

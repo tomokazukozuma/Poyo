@@ -83,6 +83,7 @@ void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 		
 	}
 	
+	
 	printf("after fal\n");
 	Piece::showPuzzle();
 	
@@ -103,8 +104,13 @@ int GameScene::fallOnePiece()
                 if (iy < 0) break;
                 n++;
                 for (iy = y; iy >= 0; iy--) {
-                    if(iy - 1 >= 0) Piece::pieceInstanceArray[x][iy] = Piece::pieceInstanceArray[x][iy-1];
-                    else Piece::pieceInstanceArray[x][iy] = Piece::emptyPiece;
+                    if(iy - 1 >= 0) {
+						Piece::pieceInstanceArray[x][iy] = Piece::pieceInstanceArray[x][iy-1];
+						Piece::pieceInstanceArray[x][iy] -> setPos(x, iy);
+					}
+                    else {
+						Piece::pieceInstanceArray[x][iy] = Piece::emptyPiece;
+					}
                 }
                 break;   
             }
@@ -167,7 +173,7 @@ int GameScene::check(int checkType, int x, int y)
 		}
 	}
 	
-	return 0;
+	return count;
 }
 
 void GameScene::checkRecursive(int x, int y, int check_array[MaxPieceX][MaxPieceY], int colorType)

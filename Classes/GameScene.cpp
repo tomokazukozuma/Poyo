@@ -72,7 +72,7 @@ void GameScene::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 //タッチエンド処理（ピースを削除する）
 void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
-    Piece::showDeleteMap();
+//    Piece::showDeleteMap();
     Piece::showPuzzle();
     
     // ピースの削除
@@ -81,7 +81,6 @@ void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     // ピースの移動
     
     //ピースの描画
-    Piece::showPuzzle();
 }
 
 void GameScene::checkDeleteMap() {

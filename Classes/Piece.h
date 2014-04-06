@@ -25,6 +25,12 @@ public:
     //ピースの位置y
     int y;
     
+    //ピースの次の位置x
+    int nextX;
+    
+    //ピースの次の位置y
+    int nextY;
+    
     //ピースのタイプ（red, blue, green, yellow）
     int type;
     
@@ -38,7 +44,7 @@ public:
     static Piece* pieceInstanceArray[4][4];
     
     
-    /*** method ***/
+    /*** static method ***/
     
     //開始時のパズルを作成
     static void makePazzle(GameScene *gameScene);
@@ -61,7 +67,7 @@ public:
     // パズルの描画
     static void drawPazzle();
     
-    // アニメーション
+    // アニメーションの実行
     static void executeDeleteAnimation();
 
     
@@ -70,6 +76,9 @@ public:
     
     //インスタンスに位置をセット
     void setPos(int x, int y);
+    
+    //インスタンスに次の位置をセット
+    void setNextPos(int nextX, int nextY);
     
     //インスタンスにタイプをセット
     void setType(int type);
@@ -87,6 +96,10 @@ public:
     int getX();
     
     int getY();
+    
+    int getNextX();
+    
+    int getNextY();
     
     int getType();
     

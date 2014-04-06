@@ -27,13 +27,13 @@ void Piece::makePazzle(GameScene *gameScene)
 			if (x == 3) nextColor = Green;
             Piece *piece = (Piece*)Piece::generatePieceWithImage(nextColor);
             piece->setPos(x, y);
+            piece->setTag(i);
             piece->setContentSize(CCSize(pieceSize, pieceSize));
+            Piece::setInstanceToPieceInstanceArray(x, y, piece);
+			Piece::pieceDeleteArray[x][y] = 0;
             piece->setPosition(ccp(
                                    winSize.width * 0.5 + (x - 1.5) * Piece::pieceSize,
                                    winSize.height * 0.5 + (1.5 - y) * Piece::pieceSize));
-            piece->setTag(i);
-            Piece::setInstanceToPieceInstanceArray(x, y, piece);
-			Piece::pieceDeleteArray[x][y] = 0;
             gameScene->addChild(piece);
             i++;
         }
@@ -73,7 +73,7 @@ Piece* Piece::generatePieceWithImage(int colorType)
 //デリートマップから1のものを削除
 void Piece::deletePiece(GameScene *gameScene)
 {
-    Piece* piece;
+    Piece *piece;
     for (int y =0; y < 4; y++) {
         for (int x = 0; x < 4; x++) {
             if(Piece::pieceDeleteArray[x][y] == DeleteFlag) {
@@ -131,6 +131,12 @@ void Piece::setPos(int x, int y)
     this->y = y;
 }
 
+void Piece::setNextPos(int nextX, int nextY)
+{
+    this->nextX = nextX;
+    this->nextY = nextY;
+}
+
 void Piece::setType(int type)
 {
     this->type = type;
@@ -160,11 +166,22 @@ int Piece::getY()
     return this->y;
 }
 
+int Piece::getNextX()
+{
+    return this->nextX;
+}
+
+int Piece::getNextY()
+{
+    return this->nextY;
+}
+
 int Piece::getType()
 {
     return this->type;
 }
 
+// 配列にインスタンスを取得
 Piece* Piece::getInstanceOfPieceInstanceArray(int x, int y)
 {
     return Piece::pieceInstanceArray[x][y];

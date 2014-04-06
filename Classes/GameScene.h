@@ -46,7 +46,7 @@ public:
 	void checkRecursive(int x, int y, int check_array[MaxPieceX][MaxPieceY], int colorType);
 	
 	// ピースが１つ落ちる処理
-	int fallOnePiece();
+	void fallOnePiece();
 	
 };
 

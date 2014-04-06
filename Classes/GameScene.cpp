@@ -84,8 +84,8 @@ void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 	// ピースの削除処理と落ちる処理（削除処理が成功しない）
 	do {
 		//　ピースの落ちる処理
-		while (GameScene::fallOnePiece() != 0) {
-		}
+		GameScene::fallOnePiece();
+		
 		//　消すピースのチェック
 		GameScene::checkDeleteMap();
 		
@@ -102,31 +102,32 @@ void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     Piece::drawPazzle(this);
 }
 
-int GameScene::fallOnePiece()
+void GameScene::fallOnePiece()
 {
-	
-	int iy,n=0;
-	
-    for (int x=0; x < MaxPieceX; x++) {
-        for (int y= MaxPieceY - 1; y >=0; y--) {
-			
-            if (Piece::pieceInstanceArray[x][y]->getType() == EMPTY){
-                for (iy = y - 1; iy >= 0 && Piece::pieceInstanceArray[x][iy]->getType() == EMPTY;iy--);
-                if (iy < 0) break;
-                n++;
-                for (iy = y; iy >= 0; iy--) {
-                    if(iy - 1 >= 0) {
-						Piece::pieceInstanceArray[x][iy] = Piece::pieceInstanceArray[x][iy-1];
-					}
-                    else {
-						Piece::pieceInstanceArray[x][iy] = Piece::emptyPiece;
-					}
-                }
-                break;   
-            }
-        }
-    }
-	return n;
+	int n;
+	do {
+		int iy;
+		n = 0;
+	    for (int x=0; x < MaxPieceX; x++) {
+    	    for (int y= MaxPieceY - 1; y >=0; y--) {
+				
+            	if (Piece::pieceInstanceArray[x][y]->getType() == EMPTY){
+                	for (iy = y - 1; iy >= 0 && Piece::pieceInstanceArray[x][iy]->getType() == EMPTY;iy--);
+	                if (iy < 0) break;
+					n++;
+    	            for (iy = y; iy >= 0; iy--) {
+	                    if(iy - 1 >= 0) {
+							Piece::pieceInstanceArray[x][iy] = Piece::pieceInstanceArray[x][iy-1];
+						}
+            	        else {
+							Piece::pieceInstanceArray[x][iy] = Piece::emptyPiece;
+						}
+	                }
+    	            break;
+        	    }
+        	}
+	    }
+	}while (n != 0);
 }
 
 bool GameScene::checkDeleteMap()

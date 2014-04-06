@@ -109,6 +109,9 @@ public:
     
     //ピースの幅を取得
     static int getPieceSize();
+	
+	static Piece* emptyPiece;
+	static Piece* getEmptyOfPiece();
 };
 
 #endif /* defined(__Poyo__Piece__) */

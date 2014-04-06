@@ -74,13 +74,46 @@ void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     
     // ピースの削除
     Piece::deletePiece(this);
+	
+	printf("before fall\n");
+	Piece::showPuzzle();
     
-    // ピースの移動
-    
+    //　ピースの落ちる処理
+	while (GameScene::fallOnePiece() != 0) {
+		
+	}
+	
+	printf("after fal\n");
+	Piece::showPuzzle();
+	
     //ピースの描画
 }
 
-void GameScene::checkDeleteMap() {
+int GameScene::fallOnePiece()
+{
+	
+	int iy,n=0;
+	
+    for (int x=0; x < MaxPieceX; x++) {
+        for (int y= MaxPieceY - 1; y >=0; y--) {
+			
+            if (Piece::pieceInstanceArray[x][y]->getType() == EMPTY){
+                for (iy = y - 1; iy >= 0 && Piece::pieceInstanceArray[x][iy]->getType() == EMPTY;iy--);
+                if (iy < 0) break;
+                n++;
+                for (iy = y; iy >= 0; iy--) {
+                    if(iy - 1 >= 0) Piece::pieceInstanceArray[x][iy] = Piece::pieceInstanceArray[x][iy-1];
+                    else Piece::pieceInstanceArray[x][iy] = Piece::emptyPiece;
+                }
+                break;   
+            }
+        }
+    }
+	return n;
+}
+
+void GameScene::checkDeleteMap()
+{
 	for (int x = 0; x < MaxPieceX; x++) {
 		for (int y = 0; y < MaxPieceY; y++) {
 			if (Piece::pieceDeleteArray[x][y] == DeleteFlag) continue;

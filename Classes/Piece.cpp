@@ -8,6 +8,7 @@ using namespace std;
 int Piece::pieceSize = 320 / MaxPieceX;
 int Piece::pieceDeleteArray[MaxPieceX][MaxPieceY];
 Piece* Piece::pieceInstanceArray[MaxPieceX][MaxPieceY];
+Piece* Piece::emptyPiece;
 
 bool Piece::init()
 {
@@ -37,6 +38,9 @@ void Piece::makePazzle(GameScene *gameScene)
             i++;
         }
     }
+	emptyPiece = Piece::generatePieceWithImage(EMPTY);
+	emptyPiece -> retain();
+	emptyPiece -> setTag(EMPTY);
 	Piece::showPuzzle();
 }
 
@@ -63,6 +67,10 @@ Piece* Piece::generatePieceWithImage(int colorType)
             piece = (Piece*)CCSprite::create("yellow.png", CCRectMake(0, 0, 50, 50));
             piece->setType(Yellow);
             break;
+		case EMPTY:
+			piece = (Piece*)CCSprite::create("yellow.png", CCRectMake(0, 0, 50, 50));
+            piece->setType(EMPTY);
+            break;
         default:
             break;
     }
@@ -78,6 +86,7 @@ void Piece::deletePiece(GameScene *gameScene)
             if(Piece::pieceDeleteArray[x][y] == DeleteFlag) {
                 piece = (Piece*)gameScene->getChildByTag(Piece::pieceInstanceArray[x][y]->getTag());
                 gameScene->removeChild(piece);
+				Piece::pieceInstanceArray[x][y] = emptyPiece;
                 Piece::pieceDeleteArray[x][y] =0;
             }
         }
@@ -106,7 +115,7 @@ void Piece::showPuzzle()
 {
 	for (int y = 0; y < MaxPieceY; y++) {
 		for (int x = 0; x < MaxPieceX; x++) {
-			printf("%2d",Piece::pieceInstanceArray[x][y]->getType());
+			printf("%3d",Piece::pieceInstanceArray[x][y]->getType());
 		}
 		printf("\n");
 	}
@@ -116,7 +125,7 @@ void Piece::showDeleteMap()
 {
     for (int y = 0; y < MaxPieceY; y++) {
 		for (int x = 0; x < MaxPieceX; x++) {
-			printf("%2d",Piece::pieceDeleteArray[x][y]);
+			printf("%3d",Piece::pieceDeleteArray[x][y]);
 		}
 		printf("\n");
 	}

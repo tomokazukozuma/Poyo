@@ -26,6 +26,8 @@ public:
     //ピースの位置y
     int y;
     
+//    CC_SYNTHESIZE_READONLY(int, nextX, NextN);
+    
 //    //ピースの次の位置x
 //    int nextX;
 //    
@@ -66,7 +68,7 @@ public:
     static void movePiece();
     
     // パズルの描画
-    static void drawPazzle();
+    static void drawPazzle(GameScene* gameScene);
     
     // アニメーションの実行
     static void executeDeleteAnimation();

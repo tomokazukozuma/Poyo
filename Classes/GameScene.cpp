@@ -81,7 +81,7 @@ void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     
 
 	
-	// ピースの削除処理と落ちる処理（削除処理が成功しない）
+	// ピースの削除処理と落ちる処理
 	do {
 		//　ピースの落ちる処理
 		GameScene::fallOnePiece();
@@ -100,6 +100,8 @@ void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 	
     //ピースの描画
     Piece::drawPazzle(this);
+    
+    Piece::pushPiece(this);
 }
 
 void GameScene::fallOnePiece()

@@ -9,6 +9,7 @@ int Piece::pieceSize = 320 / MaxPieceX;
 int Piece::pieceDeleteArray[MaxPieceX][MaxPieceY];
 Piece* Piece::pieceInstanceArray[MaxPieceX][MaxPieceY];
 Piece* Piece::emptyPiece;
+int Piece::pieceTagNumber = 0;
 
 bool Piece::init()
 {
@@ -19,7 +20,6 @@ bool Piece::init()
 void Piece::makePazzle(GameScene *gameScene)
 {
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
-    int i = 0;
     for (int y = 0; y < MaxPieceY; y++)
     {
         for (int x = 0; x < MaxPieceX; x++)
@@ -27,7 +27,8 @@ void Piece::makePazzle(GameScene *gameScene)
 			int nextColor = Random;
             Piece *piece = Piece::generatePieceWithImage(nextColor);
             piece->setPos(x, y);
-            piece->setTag(i);
+            piece->setTag(Piece::pieceTagNumber);
+            Piece::setIncrementPieceTagNumber();
             piece->setContentSize(CCSize(pieceSize, pieceSize));
             Piece::setInstanceToPieceInstanceArray(x, y, piece);
 			Piece::pieceDeleteArray[x][y] = 0;
@@ -35,7 +36,6 @@ void Piece::makePazzle(GameScene *gameScene)
                                    winSize.width * 0.5 + (x - MaxPieceX/2) * Piece::getPieceSize(),
                                    winSize.height * 0.5 + (MaxPieceY/2 - y) * Piece::pieceSize));
             gameScene->addChild(piece);
-            i++;
         }
     }
 	emptyPiece = Piece::generatePieceWithImage(EMPTY);
@@ -99,26 +99,71 @@ bool Piece::deletePiece(GameScene *gameScene)
 //パズルを描画
 void Piece::drawPazzle(GameScene* gameScene)
 {
+    //画面サイズ
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
     
+    //アニメーションの時間
     int duration = 1.0f;
+    
     CCObject* obj;
     CCARRAY_FOREACH_REVERSE(gameScene->getChildren(), obj) {
         Piece* piece = (Piece*)obj;
-        int pieceTag = piece->getTag();
         for (int y = 0; y < MaxPieceY; y++) {
             for (int x = 0; x < MaxPieceX; x++) {
-                int elementTag = Piece::pieceInstanceArray[x][y]->getTag();
-                if (pieceTag == elementTag && piece->getY() != y) {
-                    CCMoveTo* actionMove = CCMoveTo::create(duration, ccp(
+                if (piece->getTag() == Piece::pieceInstanceArray[x][y]->getTag() && piece->getY() != y) {
+                    //移動先の設定
+                    CCMoveTo* pieceMove = CCMoveTo::create(duration, ccp(
                                                                           winSize.width * 0.5 + (x - MaxPieceX/2) * Piece::getPieceSize(),
                                                                           winSize.height * 0.5 + (MaxPieceY/2 - y) * Piece::pieceSize));
-                    Piece::pieceInstanceArray[x][y]->runAction(actionMove);
                     piece->setPos(x, y);
+                    Piece::pieceInstanceArray[x][y]->runAction(pieceMove);
                 }
             }
         }
     }
+}
+
+//空のマスにピースを埋める
+void Piece::pushPiece(GameScene* gameScene)
+{
+    //画面サイズ
+    CCSize winSize = CCDirector::sharedDirector()->getWinSize();
+    
+    //アニメーションの時間
+    int duration = 1.0f;
+    
+    Piece* piece;
+    for (int y = 0; y < MaxPieceY; y++) {
+        for (int x = 0; x < MaxPieceX; x++) {
+            if (pieceInstanceArray[x][y]->getType() == EMPTY) {
+                piece = (Piece*)Piece::generatePieceWithImage(Random);
+                piece->setTag(Piece::getPieceTagNumber());
+                Piece::setIncrementPieceTagNumber();
+                piece->setPos(x, y);
+                piece->setPosition(ccp(
+                                       winSize.width * 0.5 + (x - MaxPieceX/2) * Piece::getPieceSize(),
+                                       winSize.height + (MaxPieceY - y) * Piece::getPieceSize()));
+                Piece::setInstanceToPieceInstanceArray(x, y, piece);
+                gameScene->addChild(piece);
+                
+                //移動先の設定
+                CCMoveTo* pieceMove = CCMoveTo::create(duration, ccp(
+                                                                     winSize.width * 0.5 + (x - MaxPieceX/2) * Piece::getPieceSize(),
+                                                                     winSize.height * 0.5 + (MaxPieceY/2 - y) * Piece::pieceSize));
+                piece->runAction(pieceMove);
+            }
+        }
+    }
+}
+
+void Piece::setIncrementPieceTagNumber()
+{
+    Piece::pieceTagNumber++;
+}
+
+int Piece::getPieceTagNumber()
+{
+    return Piece::pieceTagNumber;
 }
 
 //現在のパズルをコンソールに表示

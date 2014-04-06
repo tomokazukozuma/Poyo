@@ -10,13 +10,12 @@ enum
     PieceCount,
     TagPiece,
     Line,
-	EMPTY = 99,
-	Random = -1,
+	EMPTY = -1,
+	Random = -2,
     DeleteFlag = 1,
-    NoMove = -1,
     MaxPieceX = 5,
     MaxPieceY = 8,
-	thresholdOfDeletePiece = 3
+	thresholdOfDeletePiece = 4
 };
 
 #endif  /* defined(__Poyo__Config__) */

@@ -18,6 +18,8 @@ public:
     virtual bool init();
     CREATE_FUNC(Piece);
     
+    
+    
     /*** parameter ***/
     
     //ピースの位置x
@@ -25,14 +27,6 @@ public:
     
     //ピースの位置y
     int y;
-    
-//    CC_SYNTHESIZE_READONLY(int, nextX, NextN);
-    
-//    //ピースの次の位置x
-//    int nextX;
-//    
-//    //ピースの次の位置y
-//    int nextY;
     
     //ピースのタイプ（red, blue, green, yellow）
     int type;
@@ -46,8 +40,19 @@ public:
     //Pieceクラスのインスタンスを格納する配列
     static Piece* pieceInstanceArray[MaxPieceX][MaxPieceY];
     
+    //空を示すPieceインスタンス
+    static Piece* emptyPiece;
+    
+    //ピースの数をtag用にカウント
+    static int pieceTagNumber;
+    
+    
+    
     
     /*** static method ***/
+    
+    //ピースの幅を取得
+    static int getPieceSize();
     
     //開始時のパズルを作成
     static void makePazzle(GameScene *gameScene);
@@ -66,7 +71,20 @@ public:
     
     // パズルの描画
     static void drawPazzle(GameScene* gameScene);
+    
+    //隙間をピースで埋める
+    static void pushPiece(GameScene* gameScene);
+    
+    //空を示すPieceインスタンスを取得
+    static Piece* getEmptyOfPiece();
+    
+    //タグ用のナンバーをインクリメント
+    static void setIncrementPieceTagNumber();
+    
+    //タグ用のナンバーを取得
+    static int getPieceTagNumber();
 
+    
     
     
     /*** setter ***/
@@ -83,7 +101,9 @@ public:
     //インスタンスをセット
     static void setInstanceToPieceInstanceArray(int x, int y, Piece *piece);
     
+    
 
+    
     
     /*** getter ***/
     
@@ -95,12 +115,6 @@ public:
     int getY();
     
     int getType();
-    
-    //ピースの幅を取得
-    static int getPieceSize();
-	
-	static Piece* emptyPiece;
-	static Piece* getEmptyOfPiece();
 };
 
 #endif /* defined(__Poyo__Piece__) */

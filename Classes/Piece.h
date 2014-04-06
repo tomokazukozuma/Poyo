@@ -64,14 +64,8 @@ public:
     //削除マップの表示
     static void showDeleteMap();
     
-    //pieceの移動
-    static void movePiece();
-    
     // パズルの描画
     static void drawPazzle(GameScene* gameScene);
-    
-    // アニメーションの実行
-    static void executeDeleteAnimation();
 
     
     
@@ -79,9 +73,6 @@ public:
     
     //インスタンスに位置をセット
     void setPos(int x, int y);
-    
-    //インスタンスに次の位置をセット
-    void setNextPos(int nextX, int nextY);
     
     //nextX, nextYの初期化
     void initNextPos();
@@ -102,10 +93,6 @@ public:
     int getX();
     
     int getY();
-    
-    int getNextX();
-    
-    int getNextY();
     
     int getType();
     

@@ -87,6 +87,7 @@ void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 	Piece::showPuzzle();
 	
     //ピースの描画
+    Piece::drawPazzle(this);
 }
 
 int GameScene::fallOnePiece()

@@ -162,26 +162,26 @@ int GameScene::check(int checkType, int x, int y)
 	}
 	
     
-    	CCLOG("------before check --------- x:%d y:%d",x ,y);
+	//CCLOG("------before check --------- x:%d y:%d",x ,y);
 	for (int tempY = 0; tempY < MaxPieceY; tempY++) {
 		for (int tempX = 0; tempX < MaxPieceX; tempX++) {
-			printf("%3d",cells_check[tempX][tempY]);
+	//		printf("%3d",cells_check[tempX][tempY]);
 		}
-		printf("\n");
+	//	printf("\n");
 	}
 	
 	checkRecursive(x, y, cells_check,targetColorType);
 	
-	CCLOG("------after check --------- x:%d y:%d",x ,y);
+//	CCLOG("------after check --------- x:%d y:%d",x ,y);
 	int count = 0;
 	for (int tempY = 0; tempY < MaxPieceY; tempY++) {
 		for (int tempX = 0; tempX < MaxPieceX; tempX++) {
-			printf("%3d",cells_check[tempX][tempY]);
+//			printf("%3d",cells_check[tempX][tempY]);
 			if (cells_check[tempX][tempY] == 1) {
 				count++;
 			}
 		}
-		printf("\n");
+//		printf("\n");
 	}
 	
 	if (count >= thresholdOfDeletePiece) {

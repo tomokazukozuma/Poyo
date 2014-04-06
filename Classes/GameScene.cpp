@@ -106,7 +106,6 @@ int GameScene::fallOnePiece()
                 for (iy = y; iy >= 0; iy--) {
                     if(iy - 1 >= 0) {
 						Piece::pieceInstanceArray[x][iy] = Piece::pieceInstanceArray[x][iy-1];
-						Piece::pieceInstanceArray[x][iy] -> setPos(x, iy);
 					}
                     else {
 						Piece::pieceInstanceArray[x][iy] = Piece::emptyPiece;

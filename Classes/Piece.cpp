@@ -24,7 +24,6 @@ void Piece::makePazzle(GameScene *gameScene)
         for (int x = 0; x < 4; x++)
         {
 			int nextColor = Random;
-			if (x == 3) nextColor = Green;
             Piece *piece = Piece::generatePieceWithImage(nextColor);
             piece->setPos(x, y);
             piece->setTag(i);
@@ -48,19 +47,19 @@ Piece* Piece::generatePieceWithImage(int colorType)
     
 	if (colorType == Random) colorType = rand()%4;
     switch (colorType) {
-        case 0:
+        case Red:
             piece = (Piece*)CCSprite::create("red.png", CCRectMake(0, 0, 50, 50));
             piece->setType(Red);
             break;
-        case 1:
+        case Blue:
             piece = (Piece*)CCSprite::create("blue.png", CCRectMake(0, 0, 50, 50));
             piece->setType(Blue);
             break;
-        case 2:
+        case Green:
             piece = (Piece*)CCSprite::create("green.png", CCRectMake(0, 0, 50, 50));
             piece->setType(Green);
             break;
-        case 3:
+        case Yellow:
             piece = (Piece*)CCSprite::create("yellow.png", CCRectMake(0, 0, 50, 50));
             piece->setType(Yellow);
             break;
@@ -131,11 +130,11 @@ void Piece::setPos(int x, int y)
     this->y = y;
 }
 
-void Piece::setNextPos(int nextX, int nextY)
-{
-    this->nextX = nextX;
-    this->nextY = nextY;
-}
+//void Piece::setNextPos(int nextX, int nextY)
+//{
+//    this->nextX = nextX;
+//    this->nextY = nextY;
+//}
 
 void Piece::setType(int type)
 {
@@ -166,15 +165,15 @@ int Piece::getY()
     return this->y;
 }
 
-int Piece::getNextX()
-{
-    return this->nextX;
-}
-
-int Piece::getNextY()
-{
-    return this->nextY;
-}
+//int Piece::getNextX()
+//{
+//    return this->nextX;
+//}
+//
+//int Piece::getNextY()
+//{
+//    return this->nextY;
+//}
 
 int Piece::getType()
 {

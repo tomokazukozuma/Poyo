@@ -5,6 +5,7 @@
 #include "GameScene.h"
 #include "map.h"
 #include "vector.h"
+#include "Config.h"
 
 using namespace std;
 
@@ -25,23 +26,23 @@ public:
     //ピースの位置y
     int y;
     
-    //ピースの次の位置x
-    int nextX;
-    
-    //ピースの次の位置y
-    int nextY;
+//    //ピースの次の位置x
+//    int nextX;
+//    
+//    //ピースの次の位置y
+//    int nextY;
     
     //ピースのタイプ（red, blue, green, yellow）
     int type;
     
     //ピースのタイプを格納する配列
-    static int pieceTypeArray[4][4];
+    static int pieceTypeArray[MaxPieceX][MaxPieceY];
 	
 	// 削除するピースを格納する配列
-    static int pieceDeleteArray[4][4];
+    static int pieceDeleteArray[MaxPieceX][MaxPieceY];
     
     //Pieceクラスのインスタンスを格納する配列
-    static Piece* pieceInstanceArray[4][4];
+    static Piece* pieceInstanceArray[MaxPieceX][MaxPieceY];
     
     
     /*** static method ***/

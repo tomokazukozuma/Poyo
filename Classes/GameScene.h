@@ -4,6 +4,7 @@
 #include <iostream>
 #include "cocos2d.h"
 #include "cocos-ext.h"
+#include "Config.h"
 
 USING_NS_CC;
 
@@ -42,7 +43,7 @@ public:
 	void checkDeleteMap();
 	
 	// 探索用
-	void checkRecursive(int x, int y, int check_array[4][4], int colorType);
+	void checkRecursive(int x, int y, int check_array[MaxPieceX][MaxPieceY], int colorType);
 };
 
 #endif /* defined(__Poyo__GameScene__) */

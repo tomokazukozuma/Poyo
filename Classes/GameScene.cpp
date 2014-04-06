@@ -7,9 +7,6 @@ USING_NS_CC;
 
 using namespace std;
 
-//static const int numberOfRows = 4;
-//static const int numberOfColumns = 5;
-
 CCScene* GameScene::scene()
 {
     // 'scene' is an autorelease object
@@ -84,8 +81,8 @@ void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 }
 
 void GameScene::checkDeleteMap() {
-	for (int x = 0; x < 4; x++) {
-		for (int y = 0; y < 4; y++) {
+	for (int x = 0; x < MaxPieceX; x++) {
+		for (int y = 0; y < MaxPieceY; y++) {
 			if (Piece::pieceDeleteArray[x][y] == DeleteFlag) continue;
 			GameScene::check(1, x, y);
 		}
@@ -100,39 +97,37 @@ int GameScene::check(int checkType, int x, int y)
 {
 	if (Piece::pieceInstanceArray[x][y] == NULL) return 0;
 	int targetColorType = Piece::pieceInstanceArray[x][y]->getTag();
-	int cells_check[4][4];
-	for (int i = 0; i < 4; i++) {
-//		cells_check[i] = new int[4];
-		for (int j = 0; j < 4; j++) {
-			cells_check[i][j] = -1; //未チェック
+	int cells_check[MaxPieceX][MaxPieceY];
+	for (int tempY = 0; tempY < MaxPieceY; tempY++) {
+		for (int tempX = 0; tempX < MaxPieceX; tempX++) {
+			cells_check[tempX][tempY] = -1; //未チェック
 		}
 	}
-//	CCLOG("------before check --------- x:%d y:%d",x ,y);
-	for (int i = 0; i < 4; i++) {
-		for (int j = 0; j < 4; j++) {
-			//printf("%2d",cells_check[j][i]);
+    
+    //	CCLOG("------before check --------- x:%d y:%d",x ,y);
+	for (int tempY = 0; tempY < MaxPieceY; tempY++) {
+		for (int tempX = 0; tempX < MaxPieceX; tempX++) {
+			printf("%d",cells_check[tempX][tempY]);
 		}
-//		printf("\n");
 	}
 	
 	checkRecursive(x, y, cells_check,targetColorType);
 	
 //	CCLOG("------after check --------- x:%d y:%d",x ,y);
 	int count = 0;
-	for (int i = 0; i < 4; i++) {
-		for (int j = 0; j < 4; j++) {
-//			printf("%2d",cells_check[j][i]);
-			if (cells_check[j][i] == 1) {
+	for (int tempY = 0; tempY < MaxPieceY; tempY++) {
+		for (int tempX = 0; tempX < MaxPieceX; tempX++) {
+			if (cells_check[tempX][tempY] == 1) {
 				count++;
 			}
 		}
 	}
 	
 	if (count >= 3) {
-		for (int i = 0; i < 4; i++) {
-			for (int j = 0; j < 4; j++) {
-				if (cells_check[j][i] == 1) {
-					Piece::pieceDeleteArray[j][i] = DeleteFlag;
+		for (int tempY = 0; tempY < MaxPieceY; tempY++) {
+			for (int tempX = 0; tempX < MaxPieceX; tempX++) {
+				if (cells_check[tempX][tempY] == 1) {
+					Piece::pieceDeleteArray[tempX][tempY] = DeleteFlag;
 				}
 			}
 		}
@@ -141,7 +136,7 @@ int GameScene::check(int checkType, int x, int y)
 	return 0;
 }
 
-void GameScene::checkRecursive(int x, int y, int check_array[4][4], int colorType)
+void GameScene::checkRecursive(int x, int y, int check_array[MaxPieceX][MaxPieceY], int colorType)
 {
 	if (x > 3 || y > 3 || x < 0 || y < 0 ||0 < check_array[x][y]) return;
 	if (Piece::pieceInstanceArray[x][y]->getTag() != colorType) {

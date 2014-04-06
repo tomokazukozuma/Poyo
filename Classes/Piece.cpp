@@ -5,9 +5,9 @@ USING_NS_CC;
 
 using namespace std;
 
-int Piece::pieceSize = 100;
-int Piece::pieceDeleteArray[4][4];
-Piece* Piece::pieceInstanceArray[4][4];
+int Piece::pieceSize = 320 / MaxPieceX;
+int Piece::pieceDeleteArray[MaxPieceX][MaxPieceY];
+Piece* Piece::pieceInstanceArray[MaxPieceX][MaxPieceY];
 
 bool Piece::init()
 {
@@ -19,9 +19,9 @@ void Piece::makePazzle(GameScene *gameScene)
 {
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
     int i = 0;
-    for (int y = 0; y < 4; y++)
+    for (int y = 0; y < MaxPieceY; y++)
     {
-        for (int x = 0; x < 4; x++)
+        for (int x = 0; x < MaxPieceX; x++)
         {
 			int nextColor = Random;
             Piece *piece = Piece::generatePieceWithImage(nextColor);
@@ -31,8 +31,8 @@ void Piece::makePazzle(GameScene *gameScene)
             Piece::setInstanceToPieceInstanceArray(x, y, piece);
 			Piece::pieceDeleteArray[x][y] = 0;
             piece->setPosition(ccp(
-                                   winSize.width * 0.5 + (x - 1.5) * Piece::pieceSize,
-                                   winSize.height * 0.5 + (1.5 - y) * Piece::pieceSize));
+                                   winSize.width * 0.5 + (x - MaxPieceX/2) * Piece::getPieceSize(),
+                                   winSize.height * 0.5 + (MaxPieceY/2 - y) * Piece::pieceSize));
             gameScene->addChild(piece);
             i++;
         }
@@ -45,7 +45,7 @@ Piece* Piece::generatePieceWithImage(int colorType)
 {
     Piece *piece;
     
-	if (colorType == Random) colorType = rand()%4;
+	if (colorType == Random) colorType = rand()%PieceCount;
     switch (colorType) {
         case Red:
             piece = (Piece*)CCSprite::create("red.png", CCRectMake(0, 0, 50, 50));
@@ -73,8 +73,8 @@ Piece* Piece::generatePieceWithImage(int colorType)
 void Piece::deletePiece(GameScene *gameScene)
 {
     Piece *piece;
-    for (int y =0; y < 4; y++) {
-        for (int x = 0; x < 4; x++) {
+    for (int y =0; y < MaxPieceY; y++) {
+        for (int x = 0; x < MaxPieceX; x++) {
             if(Piece::pieceDeleteArray[x][y] == DeleteFlag) {
                 piece = (Piece*)gameScene->getChildByTag(Piece::pieceInstanceArray[x][y]->getTag());
                 gameScene->removeChild(piece);
@@ -87,8 +87,8 @@ void Piece::deletePiece(GameScene *gameScene)
 //ピースを移動させる
 void Piece::movePiece()
 {
-    for (int y =0; y < 4; y++) {
-        for (int x = 0; x < 4; x++) {
+    for (int y =0; y < MaxPieceY; y++) {
+        for (int x = 0; x < MaxPieceX; x++) {
             if(Piece::pieceDeleteArray[x][y] == DeleteFlag) {
                 Piece::pieceDeleteArray[x][y] =0;
             }
@@ -104,8 +104,8 @@ void Piece::drawPazzle()
 
 void Piece::showPuzzle()
 {
-	for (int y = 0; y < 4; y++) {
-		for (int x = 0; x < 4; x++) {
+	for (int y = 0; y < MaxPieceY; y++) {
+		for (int x = 0; x < MaxPieceX; x++) {
 			printf("%2d",Piece::pieceInstanceArray[x][y]->getType());
 		}
 		printf("\n");
@@ -114,9 +114,9 @@ void Piece::showPuzzle()
 
 void Piece::showDeleteMap()
 {
-    for (int i = 0; i < 4; i++) {
-		for (int j = 0; j < 4; j++) {
-			printf("%2d",Piece::pieceDeleteArray[j][i]);
+    for (int y = 0; y < MaxPieceY; y++) {
+		for (int x = 0; x < MaxPieceX; x++) {
+			printf("%2d",Piece::pieceDeleteArray[x][y]);
 		}
 		printf("\n");
 	}
@@ -130,17 +130,17 @@ void Piece::setPos(int x, int y)
     this->y = y;
 }
 
-void Piece::setNextPos(int nextX, int nextY)
-{
-    this->nextX = nextX;
-    this->nextY = nextY;
-}
-
-void Piece::initNextPos()
-{
-    this->nextX = NoMove;
-    this->nextY = NoMove;
-}
+//void Piece::setNextPos(int nextX, int nextY)
+//{
+//    this->nextX = nextX;
+//    this->nextY = nextY;
+//}
+//
+//void Piece::initNextPos()
+//{
+//    this->nextX = NoMove;
+//    this->nextY = NoMove;
+//}
 
 void Piece::setType(int type)
 {
@@ -171,15 +171,15 @@ int Piece::getY()
     return this->y;
 }
 
-int Piece::getNextX()
-{
-    return this->nextX;
-}
-
-int Piece::getNextY()
-{
-    return this->nextY;
-}
+//int Piece::getNextX()
+//{
+//    return this->nextX;
+//}
+//
+//int Piece::getNextY()
+//{
+//    return this->nextY;
+//}
 
 int Piece::getType()
 {

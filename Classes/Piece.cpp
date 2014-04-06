@@ -84,6 +84,7 @@ void Piece::deletePiece(GameScene *gameScene)
     }
 }
 
+//（途中）
 //ピースを移動させる
 void Piece::movePiece()
 {
@@ -97,11 +98,19 @@ void Piece::movePiece()
 }
 
 //パズルを描画
-void Piece::drawPazzle()
+void Piece::drawPazzle(GameScene* gameScene)
 {
-    
+    int i =0;
+    for (int y = 0; y < MaxPieceY; y++) {
+        for (int x = 0; x < MaxPieceX; x++) {
+            Piece::pieceInstanceArray[x][y]->setTag(i);
+            gameScene->addChild(Piece::pieceInstanceArray[x][y]);
+            ++i;
+        }
+    }
 }
 
+//現在のパズルをコンソールに表示
 void Piece::showPuzzle()
 {
 	for (int y = 0; y < MaxPieceY; y++) {
@@ -112,6 +121,7 @@ void Piece::showPuzzle()
 	}
 }
 
+//現在の削除するパズルをコンソールに取得
 void Piece::showDeleteMap()
 {
     for (int y = 0; y < MaxPieceY; y++) {

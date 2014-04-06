@@ -85,6 +85,24 @@ void Piece::deletePiece(GameScene *gameScene)
     }
 }
 
+//ピースを移動させる
+void Piece::movePiece()
+{
+    for (int y =0; y < 4; y++) {
+        for (int x = 0; x < 4; x++) {
+            if(Piece::pieceDeleteArray[x][y] == DeleteFlag) {
+                Piece::pieceDeleteArray[x][y] =0;
+            }
+        }
+    }
+}
+
+//ピースを描画
+void Piece::drawPazzle()
+{
+    
+}
+
 void Piece::showPuzzle()
 {
 	for (int y = 0; y < 4; y++) {

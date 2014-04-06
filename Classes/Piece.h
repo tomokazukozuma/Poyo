@@ -54,6 +54,15 @@ public:
     
     //削除マップの表示
     static void showDeleteMap();
+    
+    //pieceの移動
+    static void movePiece();
+    
+    // パズルの描画
+    static void drawPazzle();
+    
+    // アニメーション
+    static void executeDeleteAnimation();
 
     
     

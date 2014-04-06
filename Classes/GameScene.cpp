@@ -74,10 +74,13 @@ void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
     Piece::showDeleteMap();
     Piece::showPuzzle();
+    
     // ピースの削除
     Piece::deletePiece(this);
     
-    // pieceInstanceArrayの空のtokoroni9を格納
+    // ピースの移動
+    
+    //ピースの描画
     Piece::showPuzzle();
 }
 

@@ -46,6 +46,13 @@ public:
     //ピースの数をtag用にカウント
     static int pieceTagNumber;
     
+    //移動のアニメーションが終わってるかどうか
+    static bool deleteFinishFlag;
+    
+    static void setDeleteFinishFlag(bool deleteFinishFlag);
+    
+    static bool getDeleteFinishFlag();
+    
     
     
     
@@ -61,7 +68,7 @@ public:
     static Piece* generatePieceWithImage(int colorType);
     
     //ピースの削除
-    static bool deletePiece(GameScene *gameScene);
+    static void deletePiece(GameScene *gameScene);
     
     // Puzzleの表示
 	static void showPuzzle();

@@ -45,6 +45,20 @@ bool GameScene::init()
 //タッチイベント開始
 bool GameScene::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
+    // タップポイント取得
+    CCDirector* pDirector = CCDirector::sharedDirector();
+    CCPoint touchPoint = pDirector->convertToGL(pTouch->getLocationInView());
+    CCObject *obj = NULL;
+    
+    CCARRAY_FOREACH_REVERSE(this->getChildren(), obj) {
+        Piece *piece = (Piece *)obj;
+        CCRect pieceRect = piece->boundingBox();
+        if (pieceRect.containsPoint(touchPoint))
+        {
+            Piece::pieceDeleteArray[piece->getX()][piece->getY()] = DeleteFlag;
+        }
+    }
+    
     return true;
 }
 
@@ -83,23 +97,23 @@ void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 	
 	// ピースの削除処理と落ちる処理
 	do {
-		//　ピースの落ちる処理
+		//ピースの落ちる処理
 		GameScene::fallOnePiece();
-		
-		//　消すピースのチェック
+        
+        //パズルの描画
+        Piece::drawPazzle(this);
+		      
+		//消すピースのチェック
 		GameScene::checkDeleteMap();
+        
+        //ピースを削除
+        Piece::deletePiece(this);
 		
-		Piece::showDeleteMap();
-		printf("\n");
-		
-	} while (Piece::deletePiece(this) == true);
+	} while (Piece::getDeleteFinishFlag() == false);
 	
 	
 	printf("after fal\n");
 	Piece::showPuzzle();
-	
-    //ピースの描画
-    Piece::drawPazzle(this);
     
     Piece::pushPiece(this);
 }

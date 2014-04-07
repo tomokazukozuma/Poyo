@@ -10,6 +10,7 @@ int Piece::pieceDeleteArray[MaxPieceX][MaxPieceY];
 Piece* Piece::pieceInstanceArray[MaxPieceX][MaxPieceY];
 Piece* Piece::emptyPiece;
 int Piece::pieceTagNumber = 0;
+bool Piece::deleteFinishFlag = false;
 
 bool Piece::init()
 {
@@ -78,22 +79,22 @@ Piece* Piece::generatePieceWithImage(int colorType)
 }
 
 //デリートマップから1のものを削除
-bool Piece::deletePiece(GameScene *gameScene)
+void Piece::deletePiece(GameScene *gameScene)
 {
     Piece *piece;
-	bool isDeletePiece = false;
+    bool deleteFinishFlag = true;
     for (int y =0; y < MaxPieceY; y++) {
         for (int x = 0; x < MaxPieceX; x++) {
             if(Piece::pieceDeleteArray[x][y] == DeleteFlag) {
                 piece = (Piece*)gameScene->getChildByTag(Piece::pieceInstanceArray[x][y]->getTag());
                 gameScene->removeChild(piece);
-				Piece::pieceInstanceArray[x][y] = emptyPiece;
+				Piece::pieceInstanceArray[x][y] = Piece::emptyPiece;
                 Piece::pieceDeleteArray[x][y] =0;
-				isDeletePiece = true;
+                deleteFinishFlag = false;
             }
         }
     }
-	return isDeletePiece;
+    Piece::setDeleteFinishFlag(deleteFinishFlag);
 }
 
 //パズルを描画
@@ -106,7 +107,7 @@ void Piece::drawPazzle(GameScene* gameScene)
     int duration = 1.0f;
     
     CCObject* obj;
-    CCARRAY_FOREACH_REVERSE(gameScene->getChildren(), obj) {
+    CCARRAY_FOREACH(gameScene->getChildren(), obj) {
         Piece* piece = (Piece*)obj;
         for (int y = 0; y < MaxPieceY; y++) {
             for (int x = 0; x < MaxPieceX; x++) {
@@ -164,6 +165,16 @@ void Piece::setIncrementPieceTagNumber()
 int Piece::getPieceTagNumber()
 {
     return Piece::pieceTagNumber;
+}
+
+void Piece::setDeleteFinishFlag(bool deleteFinishFlag)
+{
+    Piece::deleteFinishFlag = deleteFinishFlag;
+}
+
+bool Piece::getDeleteFinishFlag()
+{
+    return Piece::deleteFinishFlag;
 }
 
 //現在のパズルをコンソールに表示

@@ -51,6 +51,16 @@ public:
     //アニメーション中か判定する
     void update(float dt);
 	
+	static bool isNotAnimation;
+	
+	void stopAnimation();
+	
+	static int count;
+	
+	void loopAnimation();
+	
+	void stopPushAnimation();
+	
 };
 
 #endif /* defined(__Poyo__GameScene__) */

@@ -6,6 +6,8 @@
 USING_NS_CC;
 
 using namespace std;
+bool GameScene::isNotAnimation = true;
+int GameScene::count = 0;
 
 CCScene* GameScene::scene()
 {
@@ -62,6 +64,7 @@ void GameScene::update(float dt)
 //タッチイベント開始
 bool GameScene::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
+	if (isNotAnimation == true){
     // タップポイント取得
     CCDirector* pDirector = CCDirector::sharedDirector();
     CCPoint touchPoint = pDirector->convertToGL(pTouch->getLocationInView());
@@ -75,6 +78,8 @@ bool GameScene::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
             Piece::pieceDeleteArray[piece->getX()][piece->getY()] = DeleteFlag;
         }
     }
+	}
+	
     
     return true;
 }
@@ -82,6 +87,7 @@ bool GameScene::ccTouchBegan(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 //
 void GameScene::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
+	if (isNotAnimation == true) {
     // タップポイント取得
     CCDirector* pDirector = CCDirector::sharedDirector();
     CCPoint touchPoint = pDirector->convertToGL(pTouch->getLocationInView());
@@ -95,39 +101,85 @@ void GameScene::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
             Piece::pieceDeleteArray[piece->getX()][piece->getY()] = DeleteFlag;
         }
     }
+	}
 }
 
 //タッチエンド処理（ピースを削除する）
 void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
-    
+    if (isNotAnimation == true) {
     // ピースの削除
     Piece::deletePiece(this);
 	
-	// ピースの削除処理と落ちる処理
-	do {
-		//ピースの落ちる処理
-		GameScene::fallOnePiece();
-    
-        //パズルの描画
-        Piece::drawPazzle(this);
 
-        if(!Piece::getIsAnimation()) {
-            //消すピースのチェック
-            GameScene::checkDeleteMap();
+	GameScene::loopAnimation();
 
-            //ピースを削除
-            Piece::deletePiece(this);
-        }
-	} while (Piece::getDeleteFinishFlag() == false);
-
-	
 //	printf("after fal\n");
 //	Piece::showDeleteMap();
+	
     
-    Piece::pushPiece(this);
+
+
+	Piece::showPuzzle();
+	
+	}
+}
+void GameScene::loopAnimation() {
+	// ピースの削除処理と落ちる処理
+	do {
+		if (isNotAnimation == true && count ==0) {
+			GameScene::fallOnePiece();
+			count++;
+		}
+		
+        //パズルの描画
+		if (isNotAnimation == true && count == 1) {
+			//ピースの落ちる処理
+			
+			Piece::drawPazzle(this);
+			
+			isNotAnimation = false;
+			this->schedule(schedule_selector(GameScene::stopAnimation), 1);
+		}
+        
+		
+		//        if(!Piece::getIsAnimation()) {
+		
+		//        }
+	} while (Piece::getDeleteFinishFlag() == false && isNotAnimation == true);
+	bool isEmpty = false;
+	for (int y = 0; y < MaxPieceY; y++) {
+        for (int x = 0; x < MaxPieceX; x++) {
+            if (Piece::pieceInstanceArray[x][y]->getType() == EMPTY) {
+				isEmpty = true;
+			}
+		}
+	}
+	if (isEmpty == true) {
+		Piece::pushPiece(this);
+		isNotAnimation = false;
+		this->schedule(schedule_selector(GameScene::stopPushAnimation), 1);
+	}
+}
+void GameScene::stopAnimation() {
+	GameScene::checkDeleteMap();
+	
+	//ピースを削除
+	Piece::deletePiece(this);
+	isNotAnimation = true;
+	count = 0;
+	this->unschedule(schedule_selector(GameScene::stopAnimation));
 }
 
+void GameScene::stopPushAnimation() {
+	GameScene::checkDeleteMap();
+	Piece::deletePiece(this);
+	isNotAnimation = true;
+	count = 0;
+	this->unschedule(schedule_selector(GameScene::stopPushAnimation));
+	GameScene::loopAnimation();
+
+}
 void GameScene::fallOnePiece()
 {
 	int n;

@@ -45,13 +45,14 @@ bool GameScene::init()
     return true;
 }
 
+//アニメーション中か毎フレーム判定
 void GameScene::update(float dt)
 {
     bool isAnimation = false;
     CCObject* obj;
     CCARRAY_FOREACH(this->getChildren(), obj) {
         Piece* piece = (Piece*)obj;
-        if (piece->numberOfRunningActions()) {
+        if (piece->numberOfRunningActions() != 0) {
             isAnimation = true;
         }
     }
@@ -111,8 +112,9 @@ void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     
         //パズルの描画
         Piece::drawPazzle(this);
-
+        
         if(!Piece::getIsAnimation()) {
+            CCLOG("1111111111111111111111111");
             //消すピースのチェック
             GameScene::checkDeleteMap();
 

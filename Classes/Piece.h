@@ -89,12 +89,16 @@ public:
     //タグ用のナンバーを取得
     static int getPieceTagNumber();
     
+    //削除するものがあるかセット
     static void setDeleteFinishFlag(bool deleteFinishFlag);
     
+    //削除するものがあるか取得
     static bool getDeleteFinishFlag();
     
+    //アニメーション中かどうかセット
     static void setIsAnimation(bool isAnimation);
     
+    //アニメーション中かどうか取得
     static bool getIsAnimation();
 
     

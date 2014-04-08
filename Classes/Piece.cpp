@@ -153,7 +153,6 @@ void Piece::pushPiece(GameScene* gameScene)
                                                                      winSize.width * 0.5 + (x - MaxPieceX/2) * Piece::getPieceSize(),
                                                                      winSize.height * 0.5 + (MaxPieceY/2 - y) * Piece::pieceSize));
                 piece->runAction(pieceMove);
-                CCLOG("%d",piece->numberOfRunningActions());
             }
         }
     }

@@ -11,6 +11,7 @@ Piece* Piece::pieceInstanceArray[MaxPieceX][MaxPieceY];
 Piece* Piece::emptyPiece;
 int Piece::pieceTagNumber = 0;
 bool Piece::deleteFinishFlag = false;
+bool Piece::isAnimation = false;
 
 bool Piece::init()
 {
@@ -131,7 +132,7 @@ void Piece::pushPiece(GameScene* gameScene)
     CCSize winSize = CCDirector::sharedDirector()->getWinSize();
     
     //アニメーションの時間
-    int duration = 1.0f;
+    float duration = 1.0f;
     
     Piece* piece;
     for (int y = 0; y < MaxPieceY; y++) {
@@ -152,6 +153,7 @@ void Piece::pushPiece(GameScene* gameScene)
                                                                      winSize.width * 0.5 + (x - MaxPieceX/2) * Piece::getPieceSize(),
                                                                      winSize.height * 0.5 + (MaxPieceY/2 - y) * Piece::pieceSize));
                 piece->runAction(pieceMove);
+                CCLOG("%d",piece->numberOfRunningActions());
             }
         }
     }
@@ -175,6 +177,16 @@ void Piece::setDeleteFinishFlag(bool deleteFinishFlag)
 bool Piece::getDeleteFinishFlag()
 {
     return Piece::deleteFinishFlag;
+}
+
+void Piece::setIsAnimation(bool isAnimation)
+{
+    Piece::isAnimation = isAnimation;
+}
+
+bool Piece::getIsAnimation()
+{
+    return Piece::isAnimation;
 }
 
 //現在のパズルをコンソールに表示

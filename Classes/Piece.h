@@ -46,12 +46,10 @@ public:
     //ピースの数をtag用にカウント
     static int pieceTagNumber;
     
-    //移動のアニメーションが終わってるかどうか
+    //削除が終わってるかどうか
     static bool deleteFinishFlag;
     
-    static void setDeleteFinishFlag(bool deleteFinishFlag);
-    
-    static bool getDeleteFinishFlag();
+    static bool isAnimation;
     
     
     
@@ -90,6 +88,14 @@ public:
     
     //タグ用のナンバーを取得
     static int getPieceTagNumber();
+    
+    static void setDeleteFinishFlag(bool deleteFinishFlag);
+    
+    static bool getDeleteFinishFlag();
+    
+    static void setIsAnimation(bool isAnimation);
+    
+    static bool getIsAnimation();
 
     
     

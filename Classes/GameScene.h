@@ -47,6 +47,9 @@ public:
 	
 	// ピースが１つ落ちる処理
 	void fallOnePiece();
+    
+    //アニメーション中か判定する
+    void update(float dt);
 	
 };
 

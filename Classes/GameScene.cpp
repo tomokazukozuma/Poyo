@@ -34,11 +34,28 @@ bool GameScene::init()
     
     CCLayerColor::initWithColor(ccc4(255, 255, 255, 255));
     
-    this->setTouchEnabled(true);
-    this->setTouchMode(kCCTouchesOneByOne);
+//    if(!Piece::getIsAnimation()) {
+        this->setTouchEnabled(true);
+        this->setTouchMode(kCCTouchesOneByOne);
+//    }
     
     Piece::makePazzle(this);
+    
+    this->scheduleUpdate();
     return true;
+}
+
+void GameScene::update(float dt)
+{
+    bool isAnimation = false;
+    CCObject* obj;
+    CCARRAY_FOREACH(this->getChildren(), obj) {
+        Piece* piece = (Piece*)obj;
+        if (piece->numberOfRunningActions()) {
+            isAnimation = true;
+        }
+    }
+    Piece::setIsAnimation(isAnimation);
 }
 
 
@@ -83,37 +100,30 @@ void GameScene::ccTouchMoved(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 //タッチエンド処理（ピースを削除する）
 void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
 {
-    Piece::showDeleteMap();
-	printf("\n");
-    Piece::showPuzzle();
     
     // ピースの削除
     Piece::deletePiece(this);
-	
-	printf("before fall\n");
-	Piece::showPuzzle();
-    
-
 	
 	// ピースの削除処理と落ちる処理
 	do {
 		//ピースの落ちる処理
 		GameScene::fallOnePiece();
-        
+    
         //パズルの描画
         Piece::drawPazzle(this);
-		      
-		//消すピースのチェック
-		GameScene::checkDeleteMap();
-        
-        //ピースを削除
-        Piece::deletePiece(this);
-		
+
+        if(!Piece::getIsAnimation()) {
+            //消すピースのチェック
+            GameScene::checkDeleteMap();
+
+            //ピースを削除
+            Piece::deletePiece(this);
+        }
 	} while (Piece::getDeleteFinishFlag() == false);
+
 	
-	
-	printf("after fal\n");
-	Piece::showPuzzle();
+//	printf("after fal\n");
+//	Piece::showDeleteMap();
     
     Piece::pushPiece(this);
 }

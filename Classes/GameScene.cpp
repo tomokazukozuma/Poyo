@@ -112,30 +112,11 @@ void GameScene::ccTouchEnded(cocos2d::CCTouch *pTouch, cocos2d::CCEvent *pEvent)
     // ピースの削除
     Piece::deletePiece(this);
 	
-<<<<<<< HEAD
-
 	GameScene::loopAnimation();
-=======
-	// ピースの削除処理と落ちる処理
-	do {
-		//ピースの落ちる処理
-		GameScene::fallOnePiece();
-    
-        //パズルの描画
-        Piece::drawPazzle(this);
-        
-        if(!Piece::getIsAnimation()) {
-            CCLOG("1111111111111111111111111");
-            //消すピースのチェック
-            GameScene::checkDeleteMap();
->>>>>>> 9a39695e8ffd96efc850d5bede96283ce602c3a5
 
 //	printf("after fal\n");
 //	Piece::showDeleteMap();
 	
-    
-
-
 	Piece::showPuzzle();
 	
 	}

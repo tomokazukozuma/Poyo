@@ -1,6 +1,7 @@
 #include "Piece.h"
 #include "Config.h"
 #include "cocos2d.h"
+#include "ScoreManeger.h"
 USING_NS_CC;
 
 using namespace std;
@@ -92,6 +93,9 @@ void Piece::deletePiece(GameScene *gameScene)
 				Piece::pieceInstanceArray[x][y] = Piece::emptyPiece;
                 Piece::pieceDeleteArray[x][y] =0;
                 deleteFinishFlag = false;
+                
+                //スコアを加算
+//                ScoreManeger::setIncrementScore();
             }
         }
     }

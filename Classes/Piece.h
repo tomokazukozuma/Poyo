@@ -3,8 +3,6 @@
 
 #include "cocos2d.h"
 #include "GameScene.h"
-#include "map.h"
-#include "vector.h"
 #include "Config.h"
 
 using namespace std;

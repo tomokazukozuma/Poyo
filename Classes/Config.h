@@ -13,9 +13,9 @@ enum
 	EMPTY = -1,
 	Random = -2,
     DeleteFlag = 1,
-    MaxPieceX = 4,
-    MaxPieceY = 4,
-	thresholdOfDeletePiece = 3
+    MaxPieceX = 5,
+    MaxPieceY = 8,
+	thresholdOfDeletePiece = 4
 };
 
 #endif  /* defined(__Poyo__Config__) */

@@ -238,6 +238,7 @@
 		C62C498518E7329300CE5D2D /* red.png in Resources */ = {isa = PBXBuildFile; fileRef = C62C497F18E7329300CE5D2D /* red.png */; };
 		C62C498618E7329300CE5D2D /* pink.png in Resources */ = {isa = PBXBuildFile; fileRef = C62C498018E7329300CE5D2D /* pink.png */; };
 		C62C498718E7329300CE5D2D /* black.png in Resources */ = {isa = PBXBuildFile; fileRef = C62C498118E7329300CE5D2D /* black.png */; };
+		C6B37E6718F59A44009F14B2 /* ScoreManeger.cpp in Sources */ = {isa = PBXBuildFile; fileRef = C6B37E6518F59A44009F14B2 /* ScoreManeger.cpp */; };
 		D44C620C132DFF330009C878 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620B132DFF330009C878 /* OpenAL.framework */; };
 		D44C620E132DFF430009C878 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620D132DFF430009C878 /* AVFoundation.framework */; };
 		D44C6210132DFF4E0009C878 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D44C620F132DFF4E0009C878 /* AudioToolbox.framework */; };
@@ -731,6 +732,8 @@
 		C62C497F18E7329300CE5D2D /* red.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = red.png; sourceTree = "<group>"; };
 		C62C498018E7329300CE5D2D /* pink.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pink.png; sourceTree = "<group>"; };
 		C62C498118E7329300CE5D2D /* black.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = black.png; sourceTree = "<group>"; };
+		C6B37E6518F59A44009F14B2 /* ScoreManeger.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ScoreManeger.cpp; path = ../Classes/ScoreManeger.cpp; sourceTree = "<group>"; };
+		C6B37E6618F59A44009F14B2 /* ScoreManeger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ScoreManeger.h; path = ../Classes/ScoreManeger.h; sourceTree = "<group>"; };
 		D44C620B132DFF330009C878 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		D44C620D132DFF430009C878 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D44C620F132DFF4E0009C878 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -1262,6 +1265,8 @@
 				C62C495B18E6C42000CE5D2D /* TitleScene.h */,
 				1AFAF8B316D35DE700DB1158 /* AppDelegate.cpp */,
 				1AFAF8B416D35DE700DB1158 /* AppDelegate.h */,
+				C6B37E6518F59A44009F14B2 /* ScoreManeger.cpp */,
+				C6B37E6618F59A44009F14B2 /* ScoreManeger.h */,
 			);
 			name = Classes;
 			path = ../classes;
@@ -1883,6 +1888,7 @@
 				15A3D9A21682F7F9002FB0C5 /* cpArbiter.c in Sources */,
 				15A3D9A31682F7F9002FB0C5 /* cpArray.c in Sources */,
 				15A3D9A41682F7F9002FB0C5 /* cpBB.c in Sources */,
+				C6B37E6718F59A44009F14B2 /* ScoreManeger.cpp in Sources */,
 				15A3D9A51682F7F9002FB0C5 /* cpBBTree.c in Sources */,
 				15A3D9A61682F7F9002FB0C5 /* cpBody.c in Sources */,
 				15A3D9A71682F7F9002FB0C5 /* cpCollision.c in Sources */,
